@@ -3,7 +3,7 @@ import BackgroundImage from '../../assets/landing-background.jpg'
 
 export const LandingBackground = styled.div`
 width:100%;
-height:100vh;
+
 background-image:url(${BackgroundImage});
 background-position:center;
 background-size:cover;
@@ -27,7 +27,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 width:100%;
-height:100%;
+height:100vh;
 `
 
 export const Line = styled.div`

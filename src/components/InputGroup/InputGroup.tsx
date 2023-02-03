@@ -1,11 +1,19 @@
 import styled from 'styled-components';
 
-const InputGroup = () => {
+type InputPropTypes = {
+  width?:string
+  label:string
+  inputType:string
+  hint:string
+  placeHolder:string
+}
+
+const InputGroup = ({width, label, placeHolder, inputType, hint}:InputPropTypes ) => {
   return (
     <StyledInputsContainer>
-        <StyledLabel>სახელი</StyledLabel>
-        <StyledInput placeholder='ანზორ' type="text"/>
-        <StyledHint>მინიმუმ 2 ასო, ქართული ასოები</StyledHint>
+        <StyledLabel>{label}</StyledLabel>
+        <StyledInput placeholder={placeHolder} type={inputType} width={width}/>
+        <StyledHint>{hint}</StyledHint>
     </StyledInputsContainer>
   )
 }
@@ -13,9 +21,10 @@ const InputGroup = () => {
 export default InputGroup
 
 const StyledInputsContainer = styled.div`
-    display:flex;
-    flex-direction:column;
-    gap:10px;
+margin-top:40px;
+display:flex;
+flex-direction:column;
+gap:10px;
 `
 
 const StyledLabel = styled.label`
@@ -26,6 +35,7 @@ line-height: 21px;
 `
 
 const StyledInput = styled.input`
+width:${prop => prop.width || "100%"};
 background: #FFFFFF;
 border: 1px solid #BCBCBC;
 border-radius: 4px;
@@ -34,7 +44,7 @@ font-weight: 400;
 font-size: 16px;
 line-height: 21px;
 color: rgba(0, 0, 0, 0.6);
-width:100%;
+
 `
 
 const StyledHint = styled.p`
