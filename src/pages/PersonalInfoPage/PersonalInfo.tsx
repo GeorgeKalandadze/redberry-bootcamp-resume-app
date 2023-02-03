@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 import { Button } from '../../components/Button/Button'
 import Header from '../../components/Header/Header'
 import InputGroup from '../../components/InputGroup/InputGroup'
+import Resume from '../../components/Resume/Resume'
 import TextareaGroup from '../../components/TextareaGroup/TextareaGroup'
 import { 
     PersonalInfoContainer,
@@ -18,6 +19,7 @@ const PersonalInfo = () => {
         fileInputRef.current?.click();
     };
   return (
+    <FlexedDiv>
     <PersonalInfoContainer>
         <Header
             headerName='ᲞᲘᲠᲐᲓᲘ ᲘᲜᲤᲝ'
@@ -60,6 +62,8 @@ const PersonalInfo = () => {
             <Button bgColor='#6B40E3'>შემდეგი</Button>
         </ButtonContainer>
     </PersonalInfoContainer>
+    <Resume/>
+    </FlexedDiv>
   )
 }
 

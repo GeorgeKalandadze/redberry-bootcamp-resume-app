@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const PersonalInfoContainer = styled.div`
 width:55%;
-height:100vh;
+height:1080px;
 padding:40px 90px;
 display:flex;
 flex-direction:column;
@@ -13,6 +13,7 @@ background-color:#f9f9f9;
 export const FlexedDiv = styled.div`
 display:flex;
 justify-content:space-between;
+
 `
 
 export const UploadImageContainer = styled.div`
