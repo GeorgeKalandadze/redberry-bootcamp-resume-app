@@ -9,7 +9,6 @@ flex-direction:column;
 justify-content:space-between;
 background-color:#f9f9f9;
 `
-
 export const FlexedDiv = styled.div`
 display:flex;
 justify-content:space-between;

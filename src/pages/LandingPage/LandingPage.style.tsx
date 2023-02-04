@@ -3,7 +3,7 @@ import BackgroundImage from '../../assets/landing-background.jpg'
 
 export const LandingBackground = styled.div`
 width:100%;
-
+height:1080px;
 background-image:url(${BackgroundImage});
 background-position:center;
 background-size:cover;
@@ -14,8 +14,8 @@ export const StyledRedberryIcon = styled.img`
 width:180px;
 height:180px;
 position:absolute;
-bottom:30%;
-right:30%;
+bottom:15%;
+right:15%;
 `
 
 export const StyledRedberryLogo = styled.img`

@@ -4,8 +4,8 @@ type InputPropTypes = {
   width?:string
   label:string
   inputType:string
-  hint:string
-  placeHolder:string
+  hint?:string
+  placeHolder?:string
 }
 
 const InputGroup = ({width, label, placeHolder, inputType, hint}:InputPropTypes ) => {
