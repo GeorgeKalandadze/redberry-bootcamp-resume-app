@@ -2,6 +2,7 @@ import React, { ContextType, createContext, FunctionComponent, ReactNode, useCon
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { formSchema } from './schema/FormSchema';
+import { useSessionStorage } from './hooks/useSessionStorage';
 
 type ContextTypes = {
     handleSubmit:any
@@ -46,7 +47,7 @@ interface ResumeObjectTypes {
 
 export const AppProvider:FunctionComponent<ContextChildType> = ({children}) => {
 
-const [info,setInfo] = useState<ResumeObjectTypes>({
+const [info,setInfo] = useSessionStorage<ResumeObjectTypes>('resume-info',{
     name:"",
     surname:"",
     email:"",
