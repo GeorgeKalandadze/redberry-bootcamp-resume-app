@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const PersonalInfoContainer = styled.div`
+export const PersonalInfoContainer = styled.form`
 width:55%;
 height:1080px;
 padding:40px 90px;

@@ -1,12 +1,13 @@
 import styled from "styled-components"
 type HeaderTypes = {
     headerName:string
+    pageNumber:number
 }
-const Header = ({headerName}:HeaderTypes) => {
+const Header = ({headerName,pageNumber}:HeaderTypes) => {
   return (
     <HeaderContainer>
         <HeaderName>{headerName}</HeaderName>
-        <PageNumber>1/3</PageNumber>
+        <PageNumber>{pageNumber}/3</PageNumber>
     </HeaderContainer>
   )
 }

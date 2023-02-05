@@ -16,7 +16,7 @@ const EducationPage = () => {
   return (
     <FlexedDiv>
         <EducationForm>
-            <Header headerName='განათლება'/>
+            <Header headerName='განათლება' pageNumber={3}/>
             <EducationContainer>
                 <InputGroup
                     label='სასწავლებელი'
