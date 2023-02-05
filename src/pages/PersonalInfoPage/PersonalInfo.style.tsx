@@ -15,22 +15,6 @@ justify-content:space-between;
 
 `
 
-export const UploadImageContainer = styled.div`
-margin-top:50px;
-display:flex;
-align-items:center;
-gap:30px;
-margin-bottom:50px;
-`
-
-export const UploadImageText = styled.p`
-font-style: normal;
-font-weight: 600;
-font-size: 18px;
-line-height: 22px;
-color: #1A1A1A;
-`
-
 export const ButtonContainer = styled.div`
 margin-top:90px;
 width:100%;

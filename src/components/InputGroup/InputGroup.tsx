@@ -10,10 +10,10 @@ type InputPropTypes = {
   hint?:string
   placeHolder?:string
   name:string
-  register:any
-  error:any
-  value:string|number
-  changeHandler:(event: React.ChangeEvent<HTMLInputElement>) => void
+  register?:any
+  error?:any
+  value?:string|number
+  changeHandler?:(event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 type InputStylePropTypes = {
@@ -36,7 +36,7 @@ const InputGroup = ({width, label, placeHolder, inputType, hint, name, register,
           value={value} 
           onChange={changeHandler}
           error={error}
-          
+
         />
         <StyledHint error={error}>{hint}</StyledHint>
     </StyledInputsContainer>

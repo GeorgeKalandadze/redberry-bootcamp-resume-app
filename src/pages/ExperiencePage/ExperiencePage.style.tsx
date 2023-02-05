@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ExperiencePageContainer = styled.div`
+export const ExperiencePageContainer = styled.form`
 width:55%;
 min-height:1080px; 
 padding:40px 90px;

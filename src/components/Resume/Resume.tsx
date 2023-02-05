@@ -3,14 +3,18 @@ import EmailIcon from '../../assets/email-icon.png'
 import MobileIcon from '../../assets/mobile-icon.png'
 import AvatarImage from '../../assets/avatar-image.jpg'
 import RedberryRedIcon from '../../assets/redberry-red-logo.png'
+import { useGlobalContext } from '../../Context';
+import { useEffect, useState } from 'react';
 const Resume = () => {
+    const {info} = useGlobalContext()
+
   return (
     <MainContainer>
     <StyledResumeContainer>
         <Section>
         <FlexedDiv>
             <div>
-                <Name>ანზორ მუმლაძე</Name>
+                <Name>{info.name}</Name>
                 <FlexedDiv>
                     <img src={EmailIcon}/>
                     <p>anzorr666@redberry.ge</p>
@@ -25,7 +29,7 @@ const Resume = () => {
                     ავდგები გამამხნევებელი ვარჯიშების მაგიერ დიზაინს ვაკეთებ. 
                 </InfoText>
             </div>
-                <StyledImage src={AvatarImage}/>
+                <StyledImage src={info.image}/>
         </FlexedDiv>
         </Section>
         <Section>

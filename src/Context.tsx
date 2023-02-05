@@ -46,7 +46,6 @@ interface ResumeObjectTypes {
 
 
 export const AppProvider:FunctionComponent<ContextChildType> = ({children}) => {
-
 const [info,setInfo] = useSessionStorage<ResumeObjectTypes>('resume-info',{
     name:"",
     surname:"",
@@ -72,7 +71,9 @@ const [info,setInfo] = useSessionStorage<ResumeObjectTypes>('resume-info',{
   
     const {handleSubmit,register,formState:{errors}} = useForm({
         resolver:yupResolver(formSchema)
-      })
+    })
+
+    
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const name = event.target.name;
@@ -80,6 +81,7 @@ const [info,setInfo] = useSessionStorage<ResumeObjectTypes>('resume-info',{
         setInfo((formData) => ({ ...formData, [name]: value }));
     };
 
+    
     
     return <AppContext.Provider value={{handleSubmit,register,errors,handleChange,info}}>
         {children}

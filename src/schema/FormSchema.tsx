@@ -25,6 +25,15 @@ export const formSchema = yup.object().shape({
     .matches(/^(\+?995)?(79\d{7}|5\d{8})$/)
     .required(),
 
+    position:yup
+    .string()
+    .min(2),
+
+    employer:yup
+    .string()
+    .min(2),
+
+
     start_date:yup
     .date()
     .required(),
@@ -32,5 +41,9 @@ export const formSchema = yup.object().shape({
     due_date:yup
     .date()
     .required(),
+
+    image: yup
+    .mixed()
+    .required()
 
 })

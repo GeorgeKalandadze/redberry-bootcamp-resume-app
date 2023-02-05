@@ -10,39 +10,32 @@ import AvatarImage from '../../assets/avatar-image.jpg'
 import { 
     PersonalInfoContainer,
     FlexedDiv,
-    UploadImageContainer,
-    UploadImageText,
     ButtonContainer
 } from './PersonalInfo.style'
+import UploadImage from '../../components/UploadImage/UploadImage'
+import { useNavigate } from 'react-router-dom'
 
 
 const PersonalInfo = () => {
     const {info,handleSubmit,register,handleChange,errors} = useGlobalContext()
 
-    //functions for file input that it works as button
-    const fileInputRef = useRef<HTMLInputElement>(null);
-    const handleClick = () => {
-        fileInputRef.current?.click();
-    };
+    const navigate = useNavigate()
 
-    //image upload
-    
-    
-    const handleAddImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-        const image = event.target.files[0];
-        console.log(image)
-        info.image = image && URL.createObjectURL(image)
+    const onSubmit = () => {
+        if(!errors.name && !errors.surname && !errors.email && !errors.phone_number){
+            navigate('/experience-page')
+        }
     }
-    }
+
+    console.log(errors)
+    
   return (
     <FlexedDiv>
-    <PersonalInfoContainer onSubmit={handleSubmit(()=> console.log("yess"))}>
+    <PersonalInfoContainer onSubmit={handleSubmit()}>
         <Header
             headerName='ᲞᲘᲠᲐᲓᲘ ᲘᲜᲤᲝ'
             pageNumber={1}
         />
-        <h1>{info.name}</h1>
         <FlexedDiv >
             <InputGroup 
                 width='370px' 
@@ -69,11 +62,7 @@ const PersonalInfo = () => {
                 changeHandler={handleChange}
             />
         </FlexedDiv>
-        <UploadImageContainer >
-            <input  ref={fileInputRef} hidden {...register("image")} type="file" onChange={() => handleAddImage} />
-            <UploadImageText >პირადი ფოტოს ატვირთვა</UploadImageText>
-            <Button type="button"bgColor='#0E80BF;' onClick={handleClick} pdng='5px 10px' >ატვირთვა</Button>
-        </UploadImageContainer>
+        <UploadImage/>
         <TextareaGroup 
             label='ჩემ შესახებ (არასავალდებულო)' 
             placeholder="ზოგადი ინფო შენ შესახებ" 
@@ -102,7 +91,7 @@ const PersonalInfo = () => {
             changeHandler={handleChange}
         />
         <ButtonContainer>
-            <Button bgColor='#6B40E3' type='submit'>შემდეგი</Button>
+            <Button bgColor='#6B40E3' type='submit' onClick={onSubmit}>შემდეგი</Button>
         </ButtonContainer>
     </PersonalInfoContainer>
     <Resume/>
