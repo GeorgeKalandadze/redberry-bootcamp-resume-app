@@ -42,8 +42,11 @@ export const formSchema = yup.object().shape({
     .date()
     .required(),
 
-    image: yup
-    .mixed()
-    .required()
+
+    picture: yup.mixed()
+    .test('required', (value) =>{
+      return value && value.length
+    })
+    
 
 })

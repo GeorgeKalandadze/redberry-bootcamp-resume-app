@@ -18,13 +18,15 @@ type InputPropTypes = {
 
 type InputStylePropTypes = {
 error:boolean
+type?:string
+value?:string|number
 }
 
 
 
 const InputGroup = ({width, label, placeHolder, inputType, hint, name, register,error,value,changeHandler}:InputPropTypes ) => {
   return (
-    <StyledInputsContainer error={error} >
+    <StyledInputsContainer error={error} type={inputType} value={value}>
         <StyledLabel error={error}>{label}</StyledLabel>
         <StyledInput 
           
@@ -54,11 +56,11 @@ position:relative;
 &::after{
   content: '';
    ;
-   background-image:url(${prop => prop.error ? ErrorImage : SuccessImage});
+   background-image:${props => props.type !== 'date' ? `url(${props.error ? ErrorImage : SuccessImage})` : ""};
     background-size: 16px;
     background-repeat: no-repeat;
     position: absolute;
-    right: -40px;
+    right:${prop => prop.error?"-40px":"0"} ;
     top: 40%;
     width: 30px;
     height: 30px;

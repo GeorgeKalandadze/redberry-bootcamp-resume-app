@@ -1,20 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, {  useRef, useState } from 'react'
 import styled from 'styled-components'
 import { useGlobalContext } from '../../Context'
 import { Button } from '../Button/Button'
+import SuccessImage from '../../assets/success-icon.png'
+import ErrorImage from '../../assets/error-icon.png'
 
 type ErrorProps = {
     error:boolean
 }
 
 const UploadImage = () => {
-    const [someImage, setSomeImage] = useState()
-    const {info,register} = useGlobalContext()
-    
-    const fileInputRef = useRef<HTMLInputElement>(null);
-    const handleClick = () => {
-        fileInputRef.current?.click();
-    };
+
+  const {info,register,errors} = useGlobalContext()
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const image = event.target.files?.[0];
@@ -22,20 +19,25 @@ const UploadImage = () => {
           info.image = URL.createObjectURL(image);
         } 
     };
+    
 
 
   return (
-    <UploadImageContainer >
-        <input  ref={fileInputRef} hidden   type="file"  name="image"  onChange={handleImageChange}/>
-        <UploadImageText >პირადი ფოტოს ატვირთვა</UploadImageText>
-        <Button type="button"bgColor='#0E80BF;' onClick={handleClick} pdng='5px 10px' >ატვირთვა</Button>
+    <UploadImageContainer error={errors.picture}>
+      <UploadImageText >პირადი ფოტოს ატვირთვა</UploadImageText>
+        <StyledUploadButtonContainer>
+        <StyledUploadImage  type="file" name="picture" {...register("picture")}       onChange={handleImageChange}/>
+        <Button type='button' bgColor='#0E80BF;'   pdng='5px 10px'>ატვირთვა</Button>
+        </StyledUploadButtonContainer>
+        
+        
     </UploadImageContainer>
   )
 }
 
 export default UploadImage
 
-export const UploadImageContainer = styled.div`
+export const UploadImageContainer = styled.div<ErrorProps >`
 margin-top:50px;
 display:flex;
 align-items:center;
@@ -45,7 +47,7 @@ margin-bottom:50px;
 &::after{
   content: '';
    ;
-   
+    background-image:url(${prop => prop.error ? ErrorImage : SuccessImage});
     background-size: 16px;
     background-repeat: no-repeat;
     position: absolute;
@@ -62,3 +64,23 @@ font-weight: 600;
 font-size: 18px;
 line-height: 22px;
 `
+
+const StyledUploadButtonContainer = styled.div`
+  position: relative;
+  max-width: 50%;
+  & input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  & button {
+    max-width: 100%;
+    font-size: smaller;
+  }
+`;
+
+export const StyledUploadImage = styled.input`
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+`;

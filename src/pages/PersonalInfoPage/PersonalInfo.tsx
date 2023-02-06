@@ -19,16 +19,15 @@ import { useNavigate } from 'react-router-dom'
 const PersonalInfo = () => {
     const {info,handleSubmit,register,handleChange,errors} = useGlobalContext()
 
-    const navigate = useNavigate()
-
-    const onSubmit = () => {
-        if(!errors.name && !errors.surname && !errors.email && !errors.phone_number){
-            navigate('/experience-page')
-        }
-    }
+    
+    const navigate = useNavigate();
 
     console.log(errors)
     
+
+    
+
+  
   return (
     <FlexedDiv>
     <PersonalInfoContainer onSubmit={handleSubmit()}>
@@ -91,7 +90,7 @@ const PersonalInfo = () => {
             changeHandler={handleChange}
         />
         <ButtonContainer>
-            <Button bgColor='#6B40E3' type='submit' onClick={onSubmit}>შემდეგი</Button>
+            <Button bgColor='#6B40E3' type='submit' >შემდეგი</Button>
         </ButtonContainer>
     </PersonalInfoContainer>
     <Resume/>
