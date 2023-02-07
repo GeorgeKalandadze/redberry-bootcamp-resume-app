@@ -14,7 +14,7 @@ type InputPropTypes = {
   error?:any
   value?:string|number
   changeHandler?:(event: React.ChangeEvent<HTMLInputElement>) => void
-  id:string
+  id?:string
 }
 
 type InputStylePropTypes = {

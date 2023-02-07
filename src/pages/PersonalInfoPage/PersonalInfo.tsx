@@ -13,17 +13,18 @@ import {
     ButtonContainer
 } from './PersonalInfo.style'
 import UploadImage from '../../components/UploadImage/UploadImage'
+import { useSessionStorage } from '../../hooks/useSessionStorage'
 
 
 
 const PersonalInfo = () => {
     const {info,handleSubmit,register,handleChange,errors} = useGlobalContext()
-    const [resumeImage,setResumeImage] = useState("");
+    const [resumeImage,setResumeImage] = useSessionStorage("person-image","");
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const image = event.target.files?.[0];
         if (image) {
-          setResumeImage(URL.createObjectURL(image)) 
+            setResumeImage(URL.createObjectURL(image)) 
         } 
     };
     

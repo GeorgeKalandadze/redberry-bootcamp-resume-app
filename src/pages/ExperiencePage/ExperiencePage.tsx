@@ -33,6 +33,7 @@ const ExperiencePage = () => {
         description: "",}]);
     }
 
+    console.log(errors)
     console.log(inputList)
     
 
@@ -48,26 +49,28 @@ const ExperiencePage = () => {
                 placeHolder='დეველოპერი, დიზაინერი, ა.შ.'
                 hint='მინიმუმ 2 სიმბოლო'
                 
-                name={`position-${i}`}
+                name={`experiences[${i}].position`}
                 inputType='text'
                 register={register}
                 
                 changeHandler={ e=>handleInputChange(e,i)}
-                error={errors.position}
+                error={
+                  errors.experiences?.[i]?.position
+                }
                 id="position"
                 
             />
              <InputGroup
                 label='დამსაქმებელი'
                 placeHolder='დამსაქმებელი'
-                name={`employer-${i}`}
+                name={`experiences.${i}.employer`}
                 
                 hint='მინიმუმ 2 სიმბოლო'
                 inputType='text'
                 register={register}
                 changeHandler={ e=>handleInputChange(e,i)}
                 error={
-                  errors.experiences && errors.experiences[i].employer
+                  errors.experiences?.[i]?.employer
                 }
                 
                 id="employer"
@@ -76,12 +79,14 @@ const ExperiencePage = () => {
                 <InputGroup 
                     width='370px' 
                     label='დაწყების რიცხვი' 
-                    name={`start_date-${i}`}
+                    name={`experiences.${i}.start_date`}
                     
                     inputType='date'
                     register={register}
                     changeHandler={ e=>handleInputChange(e,i)}
-                    error={errors.start_date}
+                    error={
+                      errors.experiences?.[i]?.start_date
+                    }
                     value={x.start_date}
                     id="start_date"
                     
@@ -89,12 +94,14 @@ const ExperiencePage = () => {
                 <InputGroup 
                     width='370px'
                     label='დამთავრების რიცხვი' 
-                    name={`due_date-${i}`}
+                    name={`experiences.${i}.due_date`}
                     
                     inputType='date'
                     register={register}
                     changeHandler={ e=>handleInputChange(e,i)}
-                    error={errors.due_date}
+                    error={
+                      errors.experiences?.[i]?.due_date
+                    }
                     value={x.due_date}
                     
                     id={"due_date"}
@@ -114,7 +121,7 @@ const ExperiencePage = () => {
 
         }
      
-        <Button bgColor='#62A1EB' onClick={ handleaddclick}>მეტი გამოცდილების დამატება</Button>
+        <Button bgColor='#62A1EB' onClick={ handleaddclick} type='button'>მეტი გამოცდილების დამატება</Button>
         <ButtonsContainer>
             <Button bgColor='#6B40E3;' pdng='10px 35px'>უკან</Button>
             <Button bgColor='#6B40E3;' pdng='10px 35px' type='submit'>შემდეგი</Button>
