@@ -5,7 +5,11 @@ import AvatarImage from '../../assets/avatar-image.jpg'
 import RedberryRedIcon from '../../assets/redberry-red-logo.png'
 import { useGlobalContext } from '../../Context';
 import { useEffect, useState } from 'react';
-const Resume = () => {
+
+type ResumePropTypes = {
+    image?:string
+}
+const Resume = ({image}:ResumePropTypes) => {
     const {info} = useGlobalContext()
 
   return (
@@ -29,7 +33,7 @@ const Resume = () => {
                     ავდგები გამამხნევებელი ვარჯიშების მაგიერ დიზაინს ვაკეთებ. 
                 </InfoText>
             </div>
-                <StyledImage src={info.image}/>
+                <StyledImage src={image}/>
         </FlexedDiv>
         </Section>
         <Section>

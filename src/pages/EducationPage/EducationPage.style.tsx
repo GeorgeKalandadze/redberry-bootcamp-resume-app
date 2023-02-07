@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const EducationForm = styled.div`
 width:55%;
 min-height:1080px; 
-padding:40px 90px;
+padding:40px 120px;
 background-color:#f9f9f9;
 `
 export const EducationContainer = styled.div`

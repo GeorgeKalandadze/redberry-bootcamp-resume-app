@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Button } from '../../components/Button/Button'
-import ExperienceForm from '../../components/ExperienceForm/ExperienceForm'
 import Header from '../../components/Header/Header'
 import InputGroup from '../../components/InputGroup/InputGroup'
 import Resume from '../../components/Resume/Resume'
@@ -18,9 +17,9 @@ const ExperiencePage = () => {
   description: ""}]);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
-      const { name, value } = event.target;
+      const { id, value } = event.target;
       const list = [...inputList];
-      list[index] = { ...list[index], [name]: value };
+      list[index] = { ...list[index], [id]: value };
       setinputList(list);
     };
 
@@ -34,7 +33,8 @@ const ExperiencePage = () => {
         description: "",}]);
     }
 
-    info.experiences = inputList
+    console.log(inputList)
+    
 
   return (
     <FlexedDiv>
@@ -42,51 +42,62 @@ const ExperiencePage = () => {
         <Header headerName='ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ' pageNumber={2}/>
         {inputList.map((x,i)=>{
           return(
-            <ExperienceContainer key={i}>
+            <ExperienceContainer >
             <InputGroup
                 label='თანამდებობა'
                 placeHolder='დეველოპერი, დიზაინერი, ა.შ.'
                 hint='მინიმუმ 2 სიმბოლო'
-                name={"position"}
+                
+                name={`position-${i}`}
                 inputType='text'
                 register={register}
+                
                 changeHandler={ e=>handleInputChange(e,i)}
                 error={errors.position}
-                
+                id="position"
                 
             />
              <InputGroup
                 label='დამსაქმებელი'
                 placeHolder='დამსაქმებელი'
-                name={"employer"}
+                name={`employer-${i}`}
+                
                 hint='მინიმუმ 2 სიმბოლო'
                 inputType='text'
                 register={register}
                 changeHandler={ e=>handleInputChange(e,i)}
-                error={errors.employer}
+                error={
+                  errors.experiences && errors.experiences[i].employer
+                }
                 
+                id="employer"
             />
             <FlexedDiv >
                 <InputGroup 
                     width='370px' 
                     label='დაწყების რიცხვი' 
-                    name="start_date"
+                    name={`start_date-${i}`}
+                    
                     inputType='date'
                     register={register}
-                    
                     changeHandler={ e=>handleInputChange(e,i)}
                     error={errors.start_date}
+                    value={x.start_date}
+                    id="start_date"
                     
                 />
                 <InputGroup 
                     width='370px'
                     label='დამთავრების რიცხვი' 
-                    name="due_date"
+                    name={`due_date-${i}`}
+                    
                     inputType='date'
                     register={register}
-                    
                     changeHandler={ e=>handleInputChange(e,i)}
                     error={errors.due_date}
+                    value={x.due_date}
+                    
+                    id={"due_date"}
                 />
             </FlexedDiv>
             <TextareaGroup
@@ -97,8 +108,7 @@ const ExperiencePage = () => {
         </ExperienceContainer>
           )
 
-        }
-              
+        } 
            
         )
 

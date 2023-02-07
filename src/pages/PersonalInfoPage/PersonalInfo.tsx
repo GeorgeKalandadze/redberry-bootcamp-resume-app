@@ -13,21 +13,20 @@ import {
     ButtonContainer
 } from './PersonalInfo.style'
 import UploadImage from '../../components/UploadImage/UploadImage'
-import { useNavigate } from 'react-router-dom'
+
 
 
 const PersonalInfo = () => {
     const {info,handleSubmit,register,handleChange,errors} = useGlobalContext()
+    const [resumeImage,setResumeImage] = useState("");
 
+    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const image = event.target.files?.[0];
+        if (image) {
+          setResumeImage(URL.createObjectURL(image)) 
+        } 
+    };
     
-    const navigate = useNavigate();
-
-    console.log(errors)
-    
-
-    
-
-  
   return (
     <FlexedDiv>
     <PersonalInfoContainer onSubmit={handleSubmit()}>
@@ -61,7 +60,7 @@ const PersonalInfo = () => {
                 changeHandler={handleChange}
             />
         </FlexedDiv>
-        <UploadImage/>
+        <UploadImage handleImageChange={handleImageChange}/>
         <TextareaGroup 
             label='ჩემ შესახებ (არასავალდებულო)' 
             placeholder="ზოგადი ინფო შენ შესახებ" 
@@ -93,7 +92,7 @@ const PersonalInfo = () => {
             <Button bgColor='#6B40E3' type='submit' >შემდეგი</Button>
         </ButtonContainer>
     </PersonalInfoContainer>
-    <Resume/>
+    <Resume image={resumeImage}/>
     </FlexedDiv>
   )
 }

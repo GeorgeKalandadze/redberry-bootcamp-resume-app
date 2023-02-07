@@ -9,16 +9,14 @@ type ErrorProps = {
     error:boolean
 }
 
-const UploadImage = () => {
+type ImageUploadTypes = {
+  handleImageChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+}
 
-  const {info,register,errors} = useGlobalContext()
+const UploadImage = ({handleImageChange}:ImageUploadTypes) => {
+  const {errors,register} = useGlobalContext()
 
-    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const image = event.target.files?.[0];
-        if (image) {
-          info.image = URL.createObjectURL(image);
-        } 
-    };
+  
     
 
 
@@ -26,7 +24,7 @@ const UploadImage = () => {
     <UploadImageContainer error={errors.picture}>
       <UploadImageText >პირადი ფოტოს ატვირთვა</UploadImageText>
         <StyledUploadButtonContainer>
-        <StyledUploadImage  type="file" name="picture" {...register("picture")}       onChange={handleImageChange}/>
+        <StyledUploadImage  type="file" name="picture" {...register("picture")}  onChange={handleImageChange}/>
         <Button type='button' bgColor='#0E80BF;'   pdng='5px 10px'>ატვირთვა</Button>
         </StyledUploadButtonContainer>
         

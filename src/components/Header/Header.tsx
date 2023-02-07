@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import ArrowIcon from '../../assets/arrow.png'
 type HeaderTypes = {
     headerName:string
     pageNumber:number
@@ -6,6 +7,9 @@ type HeaderTypes = {
 const Header = ({headerName,pageNumber}:HeaderTypes) => {
   return (
     <HeaderContainer>
+      <ArrowImageContainer >
+      <img src={ArrowIcon}/>
+      </ArrowImageContainer>
         <HeaderName>{headerName}</HeaderName>
         <PageNumber>{pageNumber}/3</PageNumber>
     </HeaderContainer>
@@ -21,6 +25,7 @@ justify-content:space-between;
 border-bottom: 1px solid #1A1A1A;
 padding-bottom:10px;
 margin-bottom:25px;
+align-items:center;
 `
 
 const HeaderName = styled.h1`
@@ -38,4 +43,17 @@ font-weight: 400;
 font-size: 20px;
 line-height: 24px;
 color: #1A1A1A;
+`
+
+const ArrowImageContainer = styled.div`
+position:absolute;
+left:2%;
+width: 40px;
+height: 40px;
+background: #FFFFFF;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center
+
 `
