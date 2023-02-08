@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export const EducationForm = styled.div`
+type SelectedError = {
+    error:any
+}
+
+export const EducationForm = styled.form`
 width:55%;
 min-height:1080px; 
 padding:40px 120px;
@@ -38,10 +42,11 @@ font-size: 16px;
 line-height: 21px; 
 `
 
-export const StyledDropdown = styled.select`
+export const StyledDropdown = styled.select<SelectedError>`
 width: 371px;
 background: #FFFFFF;
 border: 1px solid #BCBCBC;
+border-color:${prop => prop.error? "red" : "#BCBCBC"};
 border-radius: 4px;
 padding:12px 15px;
 font-weight: 400;

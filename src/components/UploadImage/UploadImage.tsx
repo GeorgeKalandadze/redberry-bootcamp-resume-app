@@ -6,29 +6,23 @@ import SuccessImage from '../../assets/success-icon.png'
 import ErrorImage from '../../assets/error-icon.png'
 
 type ErrorProps = {
-    error:boolean
+    error:string
 }
 
-type ImageUploadTypes = {
-  handleImageChange: (event: React.ChangeEvent<HTMLInputElement>) => void
-}
 
-const UploadImage = ({handleImageChange}:ImageUploadTypes) => {
-  const {errors,register} = useGlobalContext()
+
+const UploadImage = () => {
+  const {handleImageChange,info} = useGlobalContext()
 
   
-    
-
 
   return (
-    <UploadImageContainer error={errors.picture}>
+    <UploadImageContainer error={info.image}>
       <UploadImageText >პირადი ფოტოს ატვირთვა</UploadImageText>
         <StyledUploadButtonContainer>
-        <StyledUploadImage  type="file" name="picture" {...register("picture")}  onChange={handleImageChange}/>
+        <StyledUploadImage  type="file"   name="picture" /*{...register("picture")}*/  onChange={handleImageChange}/>
         <Button type='button' bgColor='#0E80BF;'   pdng='5px 10px'>ატვირთვა</Button>
         </StyledUploadButtonContainer>
-        
-        
     </UploadImageContainer>
   )
 }
@@ -45,7 +39,7 @@ margin-bottom:50px;
 &::after{
   content: '';
    ;
-    background-image:url(${prop => prop.error ? ErrorImage : SuccessImage});
+    background-image:url(${prop => prop.error =="" ? ErrorImage : SuccessImage});
     background-size: 16px;
     background-repeat: no-repeat;
     position: absolute;

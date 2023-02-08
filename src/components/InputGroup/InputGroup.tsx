@@ -9,7 +9,7 @@ type InputPropTypes = {
   inputType:string
   hint?:string
   placeHolder?:string
-  name:string
+  name?:string
   register?:any
   error?:any
   value?:string|number
@@ -18,7 +18,7 @@ type InputPropTypes = {
 }
 
 type InputStylePropTypes = {
-error:boolean
+error?:boolean
 type?:string
 value?:string|number
 }
@@ -39,7 +39,6 @@ const InputGroup = ({width, label, placeHolder, inputType, hint, name, register,
           onChange={changeHandler}
           error={error}
           id={id}
-
         />
         <StyledHint error={error}>{hint}</StyledHint>
     </StyledInputsContainer>
@@ -61,7 +60,7 @@ position:relative;
     background-size: 16px;
     background-repeat: no-repeat;
     position: absolute;
-    right:${prop => prop.error?"-40px":"0"} ;
+    right:${prop => prop.error?"-0px":"-5px"} ;
     top: 40%;
     width: 30px;
     height: 30px;

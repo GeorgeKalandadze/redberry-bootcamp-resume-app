@@ -25,7 +25,15 @@ export const formSchema = yup.object().shape({
     .matches(/^(\+?995)?(79\d{7}|5\d{8})$/)
     .required(),
 
+    // picture: yup.mixed()
+    // .test('required', (value) =>{
+    //   return value && value.length
+    // }),
+
     
+    
+
+   
 
     experiences: yup.array().of(yup.object().shape({
       position:yup
@@ -48,14 +56,29 @@ export const formSchema = yup.object().shape({
       .required(),
     })),
 
+    education: yup.array().of(yup.object().shape({
+      university:yup
+      .string()
+      .min(2)
+      .required(),
+
+      due_date:yup
+      .date()
+      .required(),
+  
+  
+      quality:yup
+      .string()
+      .required(),
+    })),
+
+
+    
 
    
+    
+    
 
-
-    picture: yup.mixed()
-    .test('required', (value) =>{
-      return value && value.length
-    })
     
 
 })

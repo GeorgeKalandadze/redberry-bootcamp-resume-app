@@ -5,28 +5,20 @@ import InputGroup from '../../components/InputGroup/InputGroup'
 import Resume from '../../components/Resume/Resume'
 import TextareaGroup from '../../components/TextareaGroup/TextareaGroup'
 import { useGlobalContext } from '../../Context'
-import AvatarImage from '../../assets/avatar-image.jpg'
-
 import { 
     PersonalInfoContainer,
     FlexedDiv,
     ButtonContainer
 } from './PersonalInfo.style'
 import UploadImage from '../../components/UploadImage/UploadImage'
-import { useSessionStorage } from '../../hooks/useSessionStorage'
+
 
 
 
 const PersonalInfo = () => {
     const {info,handleSubmit,register,handleChange,errors} = useGlobalContext()
-    const [resumeImage,setResumeImage] = useSessionStorage("person-image","");
+    console.log(info)
 
-    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const image = event.target.files?.[0];
-        if (image) {
-            setResumeImage(URL.createObjectURL(image)) 
-        } 
-    };
     
   return (
     <FlexedDiv>
@@ -61,7 +53,7 @@ const PersonalInfo = () => {
                 changeHandler={handleChange}
             />
         </FlexedDiv>
-        <UploadImage handleImageChange={handleImageChange}/>
+        <UploadImage />
         <TextareaGroup 
             label='ჩემ შესახებ (არასავალდებულო)' 
             placeholder="ზოგადი ინფო შენ შესახებ" 
@@ -93,7 +85,7 @@ const PersonalInfo = () => {
             <Button bgColor='#6B40E3' type='submit' >შემდეგი</Button>
         </ButtonContainer>
     </PersonalInfoContainer>
-    <Resume image={resumeImage}/>
+    <Resume />
     </FlexedDiv>
   )
 }

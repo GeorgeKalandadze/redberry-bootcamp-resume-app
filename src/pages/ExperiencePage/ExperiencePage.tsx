@@ -7,6 +7,7 @@ import TextareaGroup from '../../components/TextareaGroup/TextareaGroup'
 import { FlexedDiv, ExperiencePageContainer ,ButtonsContainer } from './ExperiencePage.style'
 import styled from 'styled-components'
 import { useGlobalContext } from '../../Context'
+import {  useNavigate } from 'react-router-dom'
 const ExperiencePage = () => {
   const {info,handleSubmit,register,errors} = useGlobalContext()
 
@@ -23,7 +24,6 @@ const ExperiencePage = () => {
       setinputList(list);
     };
 
-    
 
     const handleaddclick = () => { 
       setinputList([...inputList, { position: "",
@@ -33,13 +33,23 @@ const ExperiencePage = () => {
         description: "",}]);
     }
 
+    const navigate = useNavigate()
+    const onSubmit = () => {
+      if(errors.experiences){
+        console.log(errors.experiences)
+          if(!errors.experiences){
+            navigate('/education-page')
+          }
+      }
+    }
+
+    
     console.log(errors)
-    console.log(inputList)
     
 
   return (
     <FlexedDiv>
-        <ExperiencePageContainer onSubmit={handleSubmit()}>
+        <ExperiencePageContainer onSubmit={handleSubmit(onSubmit)}>
         <Header headerName='ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ' pageNumber={2}/>
         {inputList.map((x,i)=>{
           return(
@@ -48,11 +58,9 @@ const ExperiencePage = () => {
                 label='თანამდებობა'
                 placeHolder='დეველოპერი, დიზაინერი, ა.შ.'
                 hint='მინიმუმ 2 სიმბოლო'
-                
                 name={`experiences[${i}].position`}
                 inputType='text'
                 register={register}
-                
                 changeHandler={ e=>handleInputChange(e,i)}
                 error={
                   errors.experiences?.[i]?.position
@@ -111,12 +119,9 @@ const ExperiencePage = () => {
                 label='აღწერა'
                 placeholder='როლი თანამდებობაზე და ზოგადი აღწერა'
             />
-           
         </ExperienceContainer>
           )
-
-        } 
-           
+        }    
         )
 
         }
@@ -124,10 +129,10 @@ const ExperiencePage = () => {
         <Button bgColor='#62A1EB' onClick={ handleaddclick} type='button'>მეტი გამოცდილების დამატება</Button>
         <ButtonsContainer>
             <Button bgColor='#6B40E3;' pdng='10px 35px'>უკან</Button>
-            <Button bgColor='#6B40E3;' pdng='10px 35px' type='submit'>შემდეგი</Button>
+            <Button bgColor='#6B40E3;' pdng='10px 35px' type='submit' onClick={onSubmit}>შემდეგი</Button>
         </ButtonsContainer>
         </ExperiencePageContainer >
-        <Resume/>
+        <Resume />
     </FlexedDiv>
   )
 }

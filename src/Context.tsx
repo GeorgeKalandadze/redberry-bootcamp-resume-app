@@ -10,6 +10,7 @@ type ContextTypes = {
     errors:any
     handleChange:(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
     info:ResumeObjectTypes
+    handleImageChange:(event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 
@@ -81,9 +82,21 @@ const [info,setInfo] = useSessionStorage<ResumeObjectTypes>('resume-info',{
         setInfo((formData) => ({ ...formData, [name]: value }));
     };
 
+    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => {
+            const dataURL = reader.result as string;
+            setInfo((prev) => ({ ...prev, image: dataURL }));
+          };
+        }
+      };
+
     
     
-    return <AppContext.Provider value={{handleSubmit,register,errors,handleChange,info}}>
+    return <AppContext.Provider value={{handleSubmit,register,errors,handleChange,info,handleImageChange}}>
         {children}
     </AppContext.Provider>
 }
