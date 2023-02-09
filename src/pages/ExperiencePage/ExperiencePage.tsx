@@ -22,45 +22,45 @@ interface Experiences {
 }
 
 const ExperiencePage = () => {
-  const {info} = useGlobalContext()
+  const {info,handleInputChange,handleAddClick} = useGlobalContext()
 
   const {handleSubmit,register,formState:{errors},setError} = useForm<{experiences:Experiences[]}>({
     resolver:yupResolver(experienceFormSchema)
 })
 
-  const [inputList, setinputList]= useState([{ position: "",
-  employer: "",
-  start_date: "",
-  due_date: "",
-  description: ""}]);
+  // const [inputList, setinputList]= useState([{ position: "",
+  // employer: "",
+  // start_date: "",
+  // due_date: "",
+  // description: ""}]);
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
-      const { id, value } = event.target;
-      const list = [...inputList];
-      list[index] = { ...list[index], [id]: value };
-      setinputList(list);
-    };
+  //   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
+  //     const { id, value } = event.target;
+  //     const list = [...inputList];
+  //     list[index] = { ...list[index], [id]: value };
+  //     setinputList(list);
+  //   };
 
 
-    const handleaddclick = () => { 
-      setinputList([...inputList, { position: "",
-        employer: "",
-        start_date: "",
-        due_date: "",
-        description: "",}]);
-    }
+  //   const handleaddclick = () => { 
+  //     setinputList([...inputList, { position: "",
+  //       employer: "",
+  //       start_date: "",
+  //       due_date: "",
+  //       description: "",}]);
+  //   }
 
     const navigate = useNavigate()
    
     const onSubmit = () => {
       navigate('/education-page')
     }
-    console.log(inputList)
+
   return (
     <FlexedDiv>
         <ExperiencePageContainer onSubmit={handleSubmit(onSubmit )}>
         <Header headerName='ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ' pageNumber={2}/>
-        {inputList.map((x,i)=>{
+        {info.experiences.map((x,i)=>{
           return(
             <ExperienceContainer key={i}>
             <InputGroup
@@ -70,11 +70,12 @@ const ExperiencePage = () => {
                 name={`experiences[${i}].position`}
                 inputType='text'
                 register={register}
-                changeHandler={ e=>handleInputChange(e,i)}
+                changeHandler={ e=>handleInputChange(e,i,'experience')}
                 error={
                   errors.experiences?.[i]?.position
                 }
                 id="position"
+                value={x.position}
                 
             />
              <InputGroup
@@ -85,12 +86,13 @@ const ExperiencePage = () => {
                 hint='მინიმუმ 2 სიმბოლო'
                 inputType='text'
                 register={register}
-                changeHandler={ e=>handleInputChange(e,i)}
+                changeHandler={ e=>handleInputChange(e,i,'experience')}
                 error={
                   errors.experiences?.[i]?.employer
                 }
                 
                 id="employer"
+                value={x.employer}
             />
             <FlexedDiv >
                 <InputGroup 
@@ -100,7 +102,7 @@ const ExperiencePage = () => {
                     
                     inputType='date'
                     register={register}
-                    changeHandler={ e=>handleInputChange(e,i)}
+                    changeHandler={ e=>handleInputChange(e,i,'experience')}
                     error={
                       errors.experiences?.[i]?.start_date
                     }
@@ -115,7 +117,7 @@ const ExperiencePage = () => {
                     
                     inputType='date'
                     register={register}
-                    changeHandler={ e=>handleInputChange(e,i)}
+                    changeHandler={ e=>handleInputChange(e,i,'experience')}
                     error={
                       errors.experiences?.[i]?.due_date
                     }
@@ -132,7 +134,7 @@ const ExperiencePage = () => {
                 placeholder='როლი თანამდებობაზე და ზოგადი აღწერა'
                 error={errors.experiences?.[i]?.description}
                 value={x.description}
-                changeHandler={e=>handleInputChange(e,i)}
+                changeHandler={e=>handleInputChange(e,i,'experience')}
             />
         </ExperienceContainer>
           )
@@ -141,7 +143,7 @@ const ExperiencePage = () => {
 
         }
      
-        <Button bgColor='#62A1EB' onClick={ handleaddclick} type='button'>მეტი გამოცდილების დამატება</Button>
+        <Button bgColor='#62A1EB' onClick={ ()=> handleAddClick('experience')} type='button'>მეტი გამოცდილების დამატება</Button>
         <ButtonsContainer>
             <Button bgColor='#6B40E3;' pdng='10px 35px'>უკან</Button>
             <Button bgColor='#6B40E3;' pdng='10px 35px' type='submit'>შემდეგი</Button>

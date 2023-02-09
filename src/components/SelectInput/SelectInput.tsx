@@ -24,7 +24,6 @@ const SelectInput = ({error,register,name}:SelectedError ) => {
         const fetchData = async () => {
             const response = await fetch('https://resume.redberryinternship.ge/api/degrees')
             const data = await response.json();
-            
             setQuality(data)
         }
         fetchData()

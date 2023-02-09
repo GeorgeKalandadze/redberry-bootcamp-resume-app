@@ -19,7 +19,6 @@ interface Education {
     description:string
 }
 const EducationPage = () => {
-    
     const {handleSubmit,register,formState:{errors},setError} = useForm<{education:Education[]}>({
         resolver:yupResolver(educationFormSchema)
     })
@@ -73,17 +72,6 @@ const EducationPage = () => {
                             id={"university"}
                         />
                         <FlexedDiv>
-                            {/* <StyldeDropdownContainer>
-                                <StyledLabel>ხარისხი</StyledLabel>
-                                <StyledDropdown  error={errors.education?.[i]?.quality}>
-                                    <StyledOptions defaultValue={""} disabled selected hidden>აირჩიეთ ხარისხი</StyledOptions>
-                                    {
-                                        quality.map((item) => (
-                                            <option key={item.id} value={item.title}>{item.title}</option>
-                                        ))
-                                    }
-                                </StyledDropdown>
-                            </StyldeDropdownContainer> */}
                             <SelectInput register={register} error={errors.education?.[i]?.quality} name={`education[${i}].quality`}/>
                             <InputGroup
                                 name={`education[${i}].due_date`}

@@ -7,6 +7,8 @@ type ContextTypes = {
     info:ResumeObjectTypes
     handleImageChange:(event: React.ChangeEvent<HTMLInputElement>) => void
     statusChanger:(error: FieldError | undefined, inputName: keyof ResumeObjectTypes) => "error" | "validated" | "default"
+    handleAddClick:(type: 'experience' | 'education') => void
+    handleInputChange:(event: React.ChangeEvent<HTMLInputElement|HTMLSelectElement>, index: number, type: 'experience' | 'education') => void
 }
 
 
@@ -22,23 +24,27 @@ interface ResumeObjectTypes {
     surname:string
     email:string
     phone_number:string
-    experiences: {
-        position:string
-        employer:string
-        start_date:string
-        due_date:string
-        description:string
-    }[]
-    educations:{
-        institute:string
-        degree:string
-        due_date:string
-        description:string
-    }[]
+    experiences: Experiences[]
+    educations:Educations[]
     image:string;
     about_me:string;
 }
 
+
+type Experiences = {
+    position:string
+    employer:string
+    start_date:string
+    due_date:string
+    description:string
+}
+
+type Educations = {
+    university:string
+    degree:string
+    due_date:string
+    description:string
+}
 
 
 
@@ -56,7 +62,7 @@ const [info,setInfo] = useSessionStorage<ResumeObjectTypes>('resume-info',{
         description:"",
     }],
     educations:[{
-        institute:"",
+        university:"",
         degree:"",
         due_date:"",
         description:"",
@@ -92,9 +98,40 @@ const [info,setInfo] = useSessionStorage<ResumeObjectTypes>('resume-info',{
         return error ? "error" : info[inputName] ? "validated" : "default";
       };
 
+
+      const handleInputChange = (event: React.ChangeEvent<HTMLInputElement|HTMLSelectElement>, index: number, type: 'experience' | 'education') => {
+        const { id, value } = event.target;
+        let experiences: Experiences[];
+        let educations: Educations[];
+        if (type === 'experience') {
+          experiences = [...info.experiences];
+          experiences[index] = { ...experiences[index], [id]: value };
+          setInfo({ ...info, experiences });
+        } else if (type === 'education') {
+          educations = [...info.educations];
+          educations[index] = { ...educations[index], [id]: value };
+          setInfo({ ...info, educations });
+        }
+      };
+  
+        
+        const handleAddClick = (type: 'experience' | 'education') => {
+          if (type === 'experience') {
+            setInfo({
+              ...info,
+              experiences: [...info.experiences,{position: '',employer: '',start_date: '',due_date: '',description: '',},      ],
+            });
+          } else if (type === 'education') {
+            setInfo({
+              ...info,
+              educations: [...info.educations,{university: '',degree: '',due_date: '',description: '',},],
+            });
+          }
+        };
+
     
     
-    return <AppContext.Provider value={{handleChange,info,handleImageChange,statusChanger}}>
+    return <AppContext.Provider value={{handleChange,info,handleImageChange,statusChanger,handleAddClick,handleInputChange}}>
         {children}
     </AppContext.Provider>
 }
