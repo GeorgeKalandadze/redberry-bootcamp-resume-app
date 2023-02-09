@@ -6,7 +6,7 @@ import PersonalInfo from './pages/PersonalInfoPage/PersonalInfo'
 
 function App() {
   
-
+  
   return (
     <>
      <Router>

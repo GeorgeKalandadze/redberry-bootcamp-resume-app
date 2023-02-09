@@ -18,8 +18,8 @@ interface Education {
     university:string
     due_date:string
     quality:string
-  
-  }
+    description:string
+}
 const EducationPage = () => {
     const [quality, setQuality] = useState<QualityTypes[]>([]);
     const {handleSubmit,register,formState:{errors},setError} = useForm<{education:Education[]}>({
@@ -110,6 +110,13 @@ const EducationPage = () => {
                         <TextareaGroup
                             label='აღწერა'
                             placeholder='განათლების აღწერა'
+                            register={register}
+                            name={`educations[${i}].description`}
+                            error={
+                                errors.education?.[i]?.description
+                            }
+                            id={'description'}
+                            value={x.description}
                         />
                     </EducationContainer>
                 ))

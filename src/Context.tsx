@@ -1,10 +1,12 @@
 import React, { ContextType, createContext, FunctionComponent, ReactNode, useContext, useState } from 'react';
+import { FieldError } from 'react-hook-form';
 import { useSessionStorage } from './hooks/useSessionStorage';
 
 type ContextTypes = {
     handleChange:(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
     info:ResumeObjectTypes
     handleImageChange:(event: React.ChangeEvent<HTMLInputElement>) => void
+    statusChanger:(error: FieldError | undefined, inputName: keyof ResumeObjectTypes) => "error" | "validated" | "default"
 }
 
 
@@ -83,9 +85,16 @@ const [info,setInfo] = useSessionStorage<ResumeObjectTypes>('resume-info',{
         }
       };
 
+      const statusChanger = (
+        error: FieldError | undefined,
+        inputName: keyof typeof info
+      ) => {
+        return error ? "error" : info[inputName] ? "validated" : "default";
+      };
+
     
     
-    return <AppContext.Provider value={{handleChange,info,handleImageChange}}>
+    return <AppContext.Provider value={{handleChange,info,handleImageChange,statusChanger}}>
         {children}
     </AppContext.Provider>
 }

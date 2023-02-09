@@ -53,6 +53,11 @@ export const experienceFormSchema = yup.object().shape({
     due_date:yup
     .date()
     .required(),
+
+    description:yup
+    .string()
+    .min(3)
+    .required()
   })),
 })
 
@@ -71,5 +76,10 @@ export const educationFormSchema = yup.object().shape({
     quality:yup
     .string()
     .required(),
+
+    description:yup
+    .string()
+    .min(3)
+    .required()
   })), 
 })

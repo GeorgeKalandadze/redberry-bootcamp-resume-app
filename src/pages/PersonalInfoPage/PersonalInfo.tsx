@@ -17,7 +17,7 @@ import { personalInfoFormSchema } from '../../schema/FormSchema'
 import { useNavigate } from 'react-router-dom'
 
 const PersonalInfo = () => {
-    const {info, handleChange} = useGlobalContext()
+    const {info, handleChange,statusChanger} = useGlobalContext()
 
     const {handleSubmit,register,formState:{errors},setError} = useForm({
         resolver:yupResolver(personalInfoFormSchema)
@@ -52,7 +52,6 @@ const PersonalInfo = () => {
                 error={errors.name}
                 value={info.name}
                 changeHandler={handleChange}
-                
             />
             <InputGroup 
                 width='370px'
@@ -66,13 +65,14 @@ const PersonalInfo = () => {
                 value={info.surname}
                 changeHandler={handleChange}
                 
+                
             />
         </FlexedDiv>
         <UploadImage />
         <TextareaGroup 
             label='ჩემ შესახებ (არასავალდებულო)' 
-            placeholder="ზოგადი ინფო შენ შესახებ" 
-            
+            placeholder="ზოგადი ინფო შენ შესახებ"
+            value={info.about_me}
         />
         <InputGroup
             label='ელ.ფოსტა' 
@@ -85,6 +85,7 @@ const PersonalInfo = () => {
             value={info.email}
             changeHandler={handleChange}
             
+            
         />
         <InputGroup
             label='მობილურის ნომერი' 
@@ -96,6 +97,7 @@ const PersonalInfo = () => {
             error={errors.phone_number}
             value={info.phone_number}
             changeHandler={handleChange}
+            
             
         />
         <ButtonContainer>

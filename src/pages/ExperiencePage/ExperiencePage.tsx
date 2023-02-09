@@ -18,6 +18,7 @@ interface Experiences {
   employer: string;
   start_date:string;
   due_date:string;
+  description:string
 }
 
 const ExperiencePage = () => {
@@ -55,7 +56,7 @@ const ExperiencePage = () => {
       navigate('/education-page')
     }
     
-    console.log(errors)
+    console.log(info)
     
 
   return (
@@ -64,7 +65,7 @@ const ExperiencePage = () => {
         <Header headerName='ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ' pageNumber={2}/>
         {inputList.map((x,i)=>{
           return(
-            <ExperienceContainer >
+            <ExperienceContainer key={i}>
             <InputGroup
                 label='თანამდებობა'
                 placeHolder='დეველოპერი, დიზაინერი, ა.შ.'
@@ -128,7 +129,13 @@ const ExperiencePage = () => {
             </FlexedDiv>
             <TextareaGroup
                 label='აღწერა'
+                register={register}
+                id={"description"}
+                name={`experiences.${i}.description`}
                 placeholder='როლი თანამდებობაზე და ზოგადი აღწერა'
+                error={errors.experiences?.[i]?.description}
+                value={x.description}
+                changeHandler={e=>handleInputChange(e,i)}
             />
         </ExperienceContainer>
           )
