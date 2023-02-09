@@ -55,10 +55,7 @@ const ExperiencePage = () => {
     const onSubmit = () => {
       navigate('/education-page')
     }
-    
-    console.log(info)
-    
-
+    console.log(inputList)
   return (
     <FlexedDiv>
         <ExperiencePageContainer onSubmit={handleSubmit(onSubmit )}>

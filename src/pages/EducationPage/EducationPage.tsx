@@ -5,14 +5,12 @@ import { Button } from '../../components/Button/Button'
 import Header from '../../components/Header/Header'
 import InputGroup from '../../components/InputGroup/InputGroup'
 import Resume from '../../components/Resume/Resume'
+import SelectInput from '../../components/SelectInput/SelectInput';
 import TextareaGroup from '../../components/TextareaGroup/TextareaGroup'
 import { educationFormSchema } from '../../schema/FormSchema'
-import { ButtonsContainer, EducationContainer, EducationForm, FlexedDiv, StyldeDropdownContainer, StyledDropdown, StyledLabel, StyledOptions } from './EducationPage.style'
+import { ButtonsContainer, EducationContainer, EducationForm, FlexedDiv } from './EducationPage.style'
 
-type QualityTypes = {
-    title:string
-    id:number
-}
+
 
 interface Education {
     university:string
@@ -21,25 +19,18 @@ interface Education {
     description:string
 }
 const EducationPage = () => {
-    const [quality, setQuality] = useState<QualityTypes[]>([]);
+    
     const {handleSubmit,register,formState:{errors},setError} = useForm<{education:Education[]}>({
         resolver:yupResolver(educationFormSchema)
     })
     
-    useEffect(() => {
-        const fetchData = async () => {
-            const response = await fetch('https://resume.redberryinternship.ge/api/degrees')
-            const data = await response.json();
-            
-            setQuality(data)
-        }
-        fetchData()
-    },[])
+   
 
     const [inputList, setinputList]= useState([{ university: "",
     due_date: "",
     description: "",
-    quality:""
+    quality:"",
+    education:""
 }]);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
@@ -54,7 +45,8 @@ const EducationPage = () => {
       setinputList([...inputList, { university: "",
         due_date: "",
         description: "",
-        quality:""}]);
+        quality:"",
+        education:""}]);
     }
 
     console.log(errors)
@@ -81,7 +73,7 @@ const EducationPage = () => {
                             id={"university"}
                         />
                         <FlexedDiv>
-                            <StyldeDropdownContainer>
+                            {/* <StyldeDropdownContainer>
                                 <StyledLabel>ხარისხი</StyledLabel>
                                 <StyledDropdown  error={errors.education?.[i]?.quality}>
                                     <StyledOptions defaultValue={""} disabled selected hidden>აირჩიეთ ხარისხი</StyledOptions>
@@ -91,7 +83,8 @@ const EducationPage = () => {
                                         ))
                                     }
                                 </StyledDropdown>
-                            </StyldeDropdownContainer>
+                            </StyldeDropdownContainer> */}
+                            <SelectInput register={register} error={errors.education?.[i]?.quality} name={`education[${i}].quality`}/>
                             <InputGroup
                                 name={`education[${i}].due_date`}
                                 register={register}
@@ -111,12 +104,13 @@ const EducationPage = () => {
                             label='აღწერა'
                             placeholder='განათლების აღწერა'
                             register={register}
-                            name={`educations[${i}].description`}
+                            name={`education[${i}].description`}
                             error={
                                 errors.education?.[i]?.description
                             }
                             id={'description'}
                             value={x.description}
+                            changeHandler={e=>handleInputChange(e,i)}
                         />
                     </EducationContainer>
                 ))

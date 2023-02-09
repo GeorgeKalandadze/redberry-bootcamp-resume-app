@@ -1,9 +1,5 @@
 import styled from "styled-components";
 
-type SelectedError = {
-    error:any
-}
-
 export const EducationForm = styled.form`
 width:55%;
 min-height:1080px; 
@@ -28,33 +24,4 @@ margin-top:200px;
 display:flex;
 justify-content:space-between;
 `
-export const StyldeDropdownContainer = styled.div`
-margin-top:40px;
-display:flex;
-flex-direction:column;
-gap:10px;
-`
 
-export const StyledLabel = styled.label`
-font-style: normal;
-font-weight: 600;
-font-size: 16px;
-line-height: 21px; 
-`
-
-export const StyledDropdown = styled.select<SelectedError>`
-width: 371px;
-background: #FFFFFF;
-border: 1px solid #BCBCBC;
-border-color:${prop => prop.error? "red" : "#BCBCBC"};
-border-radius: 4px;
-padding:12px 15px;
-font-weight: 400;
-font-size: 16px;
-line-height: 21px;
-color: rgba(0, 0, 0, 0.6);
-`
-
-export const StyledOptions = styled.option`
-    
-`

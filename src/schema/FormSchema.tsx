@@ -72,14 +72,13 @@ export const educationFormSchema = yup.object().shape({
     .date()
     .required(),
 
+    description:yup
+    .string()
+    .min(3)
+    .required(),
 
     quality:yup
     .string()
     .required(),
-
-    description:yup
-    .string()
-    .min(3)
-    .required()
   })), 
 })
