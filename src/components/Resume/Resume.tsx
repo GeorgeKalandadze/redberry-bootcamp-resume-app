@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 
 const Resume = () => {
     const {info} = useGlobalContext()
+    // const info =JSON.parse(sessionStorage.getItem('resume-info')) 
 
   return (
     <MainContainer>
@@ -16,7 +17,7 @@ const Resume = () => {
         <Section>
         <FlexedDiv>
             <div>
-                <Name>{info.name}</Name>
+                 <Name>{info.name}</Name>
                 <FlexedDiv>
                     <img src={EmailIcon}/>
                     <p>anzorr666@redberry.ge</p>

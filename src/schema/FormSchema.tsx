@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 
 
-export const formSchema = yup.object().shape({
+export const personalInfoFormSchema = yup.object().shape({
     name:yup
     .string()
     .min(2)
@@ -28,57 +28,48 @@ export const formSchema = yup.object().shape({
     // picture: yup.mixed()
     // .test('required', (value) =>{
     //   return value && value.length
-    // }),
+    // }), 
 
-    
-    
-
-   
-
-    experiences: yup.array().of(yup.object().shape({
-      position:yup
-      .string()
-      .min(2)
-      .required(),
-
-      employer:yup
-      .string()
-      .min(2)
-      .required(),
-  
-  
-      start_date:yup
-      .date()
-      .required(),
-  
-      due_date:yup
-      .date()
-      .required(),
-    })),
-
-    education: yup.array().of(yup.object().shape({
-      university:yup
-      .string()
-      .min(2)
-      .required(),
-
-      due_date:yup
-      .date()
-      .required(),
-  
-  
-      quality:yup
-      .string()
-      .required(),
-    })),
+})
 
 
-    
+export const experienceFormSchema = yup.object().shape({
+  experiences: yup.array().of(yup.object().shape({
+    position:yup
+    .string()
+    .min(2)
+    .required(),
 
-   
-    
-    
+    employer:yup
+    .string()
+    .min(2)
+    .required(),
 
-    
 
+    start_date:yup
+    .date()
+    .required(),
+
+    due_date:yup
+    .date()
+    .required(),
+  })),
+})
+
+export const educationFormSchema = yup.object().shape({
+  education: yup.array().of(yup.object().shape({
+    university:yup
+    .string()
+    .min(2)
+    .required(),
+
+    due_date:yup
+    .date()
+    .required(),
+
+
+    quality:yup
+    .string()
+    .required(),
+  })), 
 })

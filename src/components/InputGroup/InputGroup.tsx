@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import SuccessImage from '../../assets/success-icon.png'
 import ErrorImage from '../../assets/error-icon.png'
+import { Ref } from 'react';
+import { FieldArray, FieldValues, UseFormRegister } from 'react-hook-form/dist/types';
 
 
 type InputPropTypes = {
@@ -15,20 +17,22 @@ type InputPropTypes = {
   value?:string|number
   changeHandler?:(event: React.ChangeEvent<HTMLInputElement>) => void
   id?:string
+ 
 }
 
 type InputStylePropTypes = {
-error?:boolean
+error?:string
 type?:string
 value?:string|number
+
 }
 
 
 
 const InputGroup = ({width, label, placeHolder, inputType, hint, name, register,error,value,changeHandler,id}:InputPropTypes ) => {
   return (
-    <StyledInputsContainer error={error} type={inputType} value={value}>
-        <StyledLabel error={error}>{label}</StyledLabel>
+    <StyledInputsContainer error={error} type={inputType} value={value} >
+        <StyledLabel error={error} >{label}</StyledLabel>
         <StyledInput 
           placeholder={placeHolder} 
           type={inputType} 
@@ -41,9 +45,12 @@ const InputGroup = ({width, label, placeHolder, inputType, hint, name, register,
           id={id}
         />
         <StyledHint error={error}>{hint}</StyledHint>
+        
     </StyledInputsContainer>
   )
 }
+
+
 
 export default InputGroup
 
@@ -93,6 +100,9 @@ const StyledHint = styled.p<InputStylePropTypes>`
 font-weight: 300;
 font-size: 14px;
 line-height: 21px;
-color:${prop => prop.error ? "red" : "#2E2E2E"};
+color: ${props => props.error && "red"};
+
 `
+
+
 

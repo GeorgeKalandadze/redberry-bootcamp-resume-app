@@ -1,13 +1,7 @@
 import React, { ContextType, createContext, FunctionComponent, ReactNode, useContext, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { formSchema } from './schema/FormSchema';
 import { useSessionStorage } from './hooks/useSessionStorage';
 
 type ContextTypes = {
-    handleSubmit:any
-    register:any
-    errors:any
     handleChange:(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
     info:ResumeObjectTypes
     handleImageChange:(event: React.ChangeEvent<HTMLInputElement>) => void
@@ -69,12 +63,7 @@ const [info,setInfo] = useSessionStorage<ResumeObjectTypes>('resume-info',{
     about_me:"",
 })
 
-  
-    const {handleSubmit,register,formState:{errors}} = useForm({
-        resolver:yupResolver(formSchema)
-    })
 
-    
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const name = event.target.name;
@@ -96,7 +85,7 @@ const [info,setInfo] = useSessionStorage<ResumeObjectTypes>('resume-info',{
 
     
     
-    return <AppContext.Provider value={{handleSubmit,register,errors,handleChange,info,handleImageChange}}>
+    return <AppContext.Provider value={{handleChange,info,handleImageChange}}>
         {children}
     </AppContext.Provider>
 }

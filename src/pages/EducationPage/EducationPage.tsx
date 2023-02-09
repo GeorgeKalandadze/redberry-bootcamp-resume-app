@@ -1,20 +1,31 @@
+import { yupResolver } from '@hookform/resolvers/yup'
 import React, { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form';
 import { Button } from '../../components/Button/Button'
 import Header from '../../components/Header/Header'
 import InputGroup from '../../components/InputGroup/InputGroup'
 import Resume from '../../components/Resume/Resume'
 import TextareaGroup from '../../components/TextareaGroup/TextareaGroup'
-import { useGlobalContext } from '../../Context'
+import { educationFormSchema } from '../../schema/FormSchema'
 import { ButtonsContainer, EducationContainer, EducationForm, FlexedDiv, StyldeDropdownContainer, StyledDropdown, StyledLabel, StyledOptions } from './EducationPage.style'
 
 type QualityTypes = {
     title:string
     id:number
 }
-const EducationPage = () => {
-    const {register,errors,handleSubmit} = useGlobalContext()
-    const [quality, setQuality] = useState<QualityTypes[]>([]);
 
+interface Education {
+    university:string
+    due_date:string
+    quality:string
+  
+  }
+const EducationPage = () => {
+    const [quality, setQuality] = useState<QualityTypes[]>([]);
+    const {handleSubmit,register,formState:{errors},setError} = useForm<{education:Education[]}>({
+        resolver:yupResolver(educationFormSchema)
+    })
+    
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetch('https://resume.redberryinternship.ge/api/degrees')
@@ -50,7 +61,7 @@ const EducationPage = () => {
     
   return (
     <FlexedDiv>
-        <EducationForm onSubmit={handleSubmit()}>
+        <EducationForm onSubmit={handleSubmit(console.log)}>
             <Header headerName='განათლება' pageNumber={3}/>
             {
                 inputList.map((x,i) => (
@@ -72,7 +83,7 @@ const EducationPage = () => {
                         <FlexedDiv>
                             <StyldeDropdownContainer>
                                 <StyledLabel>ხარისხი</StyledLabel>
-                                <StyledDropdown name='quality' {...register("quality")} error={errors.education?.[i]?.quality}>
+                                <StyledDropdown  error={errors.education?.[i]?.quality}>
                                     <StyledOptions defaultValue={""} disabled selected hidden>აირჩიეთ ხარისხი</StyledOptions>
                                     {
                                         quality.map((item) => (

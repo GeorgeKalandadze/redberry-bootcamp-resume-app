@@ -39,7 +39,7 @@ margin-bottom:50px;
 &::after{
   content: '';
    ;
-    background-image:url(${prop => prop.error =="" ? ErrorImage : SuccessImage});
+    background-image:url(${prop => prop.error &&  prop.error === "" ? ErrorImage : prop.error !=="" ? SuccessImage: null});
     background-size: 16px;
     background-repeat: no-repeat;
     position: absolute;

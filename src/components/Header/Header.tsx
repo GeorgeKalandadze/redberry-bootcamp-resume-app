@@ -1,13 +1,21 @@
+import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import ArrowIcon from '../../assets/arrow.png'
+import { useGlobalContext } from "../../Context"
 type HeaderTypes = {
     headerName:string
     pageNumber:number
 }
 const Header = ({headerName,pageNumber}:HeaderTypes) => {
+  const {info} = useGlobalContext()
+  const navigate = useNavigate()
+  const handleClick = () => {
+    sessionStorage.clear()
+    navigate('/')
+  }
   return (
     <HeaderContainer>
-      <ArrowImageContainer >
+      <ArrowImageContainer onClick={handleClick}>
       <img src={ArrowIcon}/>
       </ArrowImageContainer>
         <HeaderName>{headerName}</HeaderName>

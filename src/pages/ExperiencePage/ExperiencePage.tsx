@@ -8,8 +8,24 @@ import { FlexedDiv, ExperiencePageContainer ,ButtonsContainer } from './Experien
 import styled from 'styled-components'
 import { useGlobalContext } from '../../Context'
 import {  useNavigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { experienceFormSchema } from '../../schema/FormSchema'
+
+
+interface Experiences {
+  position: string;
+  employer: string;
+  start_date:string;
+  due_date:string;
+}
+
 const ExperiencePage = () => {
-  const {info,handleSubmit,register,errors} = useGlobalContext()
+  const {info} = useGlobalContext()
+
+  const {handleSubmit,register,formState:{errors},setError} = useForm<{experiences:Experiences[]}>({
+    resolver:yupResolver(experienceFormSchema)
+})
 
   const [inputList, setinputList]= useState([{ position: "",
   employer: "",
@@ -34,22 +50,17 @@ const ExperiencePage = () => {
     }
 
     const navigate = useNavigate()
+   
     const onSubmit = () => {
-      if(errors.experiences){
-        console.log(errors.experiences)
-          if(!errors.experiences){
-            navigate('/education-page')
-          }
-      }
+      navigate('/education-page')
     }
-
     
     console.log(errors)
     
 
   return (
     <FlexedDiv>
-        <ExperiencePageContainer onSubmit={handleSubmit(onSubmit)}>
+        <ExperiencePageContainer onSubmit={handleSubmit(onSubmit )}>
         <Header headerName='ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ' pageNumber={2}/>
         {inputList.map((x,i)=>{
           return(
@@ -129,7 +140,7 @@ const ExperiencePage = () => {
         <Button bgColor='#62A1EB' onClick={ handleaddclick} type='button'>მეტი გამოცდილების დამატება</Button>
         <ButtonsContainer>
             <Button bgColor='#6B40E3;' pdng='10px 35px'>უკან</Button>
-            <Button bgColor='#6B40E3;' pdng='10px 35px' type='submit' onClick={onSubmit}>შემდეგი</Button>
+            <Button bgColor='#6B40E3;' pdng='10px 35px' type='submit'>შემდეგი</Button>
         </ButtonsContainer>
         </ExperiencePageContainer >
         <Resume />
