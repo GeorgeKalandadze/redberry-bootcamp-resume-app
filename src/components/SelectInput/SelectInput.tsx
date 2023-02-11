@@ -6,10 +6,13 @@ type QualityTypes = {
     id:number
 }
 
-type SelectedError = {
+type SelectInputPropTypes= {
     error:any
     register:any
     name:string
+    changeHandler:(event: React.ChangeEvent<HTMLInputElement|HTMLSelectElement>, index: number, type: 'experience' | 'education') => void
+    value:string
+    id:string
 }
 
 type SelectInputStyle = {
@@ -17,9 +20,9 @@ type SelectInputStyle = {
 }
 
 
-const SelectInput = ({error,register,name}:SelectedError ) => {
+const SelectInput = ({error,register,name,changeHandler,value,id}:SelectInputPropTypes ) => {
     const [quality, setQuality] = useState<QualityTypes[]>([]);
-
+    
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetch('https://resume.redberryinternship.ge/api/degrees')
@@ -32,7 +35,7 @@ const SelectInput = ({error,register,name}:SelectedError ) => {
   return (
     <StyldeDropdownContainer>
         <StyledLabel>ხარისხი</StyledLabel>
-        <StyledDropdown {...register(name)} name={name} error={error}>
+        <StyledDropdown  {...register(name)}  name={name} error={error} onChange={changeHandler} id={id} value={value || ''}> 
             {
                 quality.map((item) => (
                     <StyledOptions key={item.id} value={item.title}>{item.title}</StyledOptions>

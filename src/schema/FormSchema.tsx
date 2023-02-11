@@ -63,7 +63,7 @@ export const experienceFormSchema = yup.object().shape({
 
 export const educationFormSchema = yup.object().shape({
   education: yup.array().of(yup.object().shape({
-    university:yup
+    institute:yup
     .string()
     .min(2)
     .required(),
@@ -77,8 +77,7 @@ export const educationFormSchema = yup.object().shape({
     .min(3)
     .required(),
 
-    quality:yup
-    .string()
-    .required(),
+    degree:yup.string().required()
+    
   })), 
 })

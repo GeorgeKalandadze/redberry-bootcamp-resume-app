@@ -17,20 +17,26 @@ import { personalInfoFormSchema } from '../../schema/FormSchema'
 import { useNavigate } from 'react-router-dom'
 
 const PersonalInfo = () => {
-    const {info, handleChange,statusChanger} = useGlobalContext()
-
-    const {handleSubmit,register,formState:{errors},setError} = useForm({
-        resolver:yupResolver(personalInfoFormSchema)
+    const {info, handleChange,handleInputChange,statusHandler} = useGlobalContext()
+    
+    const {handleSubmit,register,formState:{errors}} = useForm({
+        mode:"all",
+        resolver:yupResolver(personalInfoFormSchema),
+        
     })
+
+    
+
+  
     
     const navigate = useNavigate()
     const onSubmit = () => {
+        
         if(info.image){
             navigate('/experience-page')
-        } 
+        }
+         
     }
-
-    console.log(errors)
   return (
     <FlexedDiv>
     <PersonalInfoContainer onSubmit={handleSubmit(onSubmit)}>
@@ -38,8 +44,6 @@ const PersonalInfo = () => {
             headerName='ᲞᲘᲠᲐᲓᲘ ᲘᲜᲤᲝ'
             pageNumber={1}
         />
-
-         <h1 style={{color:errors.name && errors.name?"red": !errors.name?"green":"black"}}>text</h1>
         <FlexedDiv >
             <InputGroup 
                 width='370px' 
@@ -52,6 +56,7 @@ const PersonalInfo = () => {
                 error={errors.name}
                 value={info.name}
                 changeHandler={handleChange}
+                status={statusHandler(errors.name, info.name)}
             />
             <InputGroup 
                 width='370px'
@@ -61,9 +66,10 @@ const PersonalInfo = () => {
                 placeHolder='მუმლაძე'
                 name='surname'
                 register={register}
-                error={errors.surname}
+                error={errors.surname?.message}
                 value={info.surname}
                 changeHandler={handleChange}
+                status={statusHandler(errors.surname, info.surname)}
                 
                 
             />
@@ -73,6 +79,9 @@ const PersonalInfo = () => {
             label='ჩემ შესახებ (არასავალდებულო)' 
             placeholder="ზოგადი ინფო შენ შესახებ"
             value={info.about_me}
+            changeHandler={handleChange}
+            name="about_me"
+            // status={statusHandler(errors.about_me?.message, info.about_me)}
         />
         <InputGroup
             label='ელ.ფოსტა' 
@@ -81,9 +90,10 @@ const PersonalInfo = () => {
             placeHolder='anzorr666@redberry.ge'
             name='email'
             register={register}
-            error={errors.email}
+            error={errors.email?.message}
             value={info.email}
             changeHandler={handleChange}
+            status={statusHandler(errors.email , info.email)}
             
             
         />
@@ -97,6 +107,7 @@ const PersonalInfo = () => {
             error={errors.phone_number}
             value={info.phone_number}
             changeHandler={handleChange}
+            status={statusHandler(errors.phone_number , info.phone_number)}
             
             
         />

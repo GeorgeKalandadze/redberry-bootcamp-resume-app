@@ -7,15 +7,15 @@ type HeaderTypes = {
     pageNumber:number
 }
 const Header = ({headerName,pageNumber}:HeaderTypes) => {
-  const {info} = useGlobalContext()
+  const {info,resetInfo} = useGlobalContext()
   const navigate = useNavigate()
-  const handleClick = () => {
-    sessionStorage.clear()
-    navigate('/')
-  }
+  
   return (
-    <HeaderContainer>
-      <ArrowImageContainer onClick={handleClick}>
+    <HeaderContainer onClick={() => {
+      resetInfo()
+      navigate('/')
+      }}>
+      <ArrowImageContainer >
       <img src={ArrowIcon}/>
       </ArrowImageContainer>
         <HeaderName>{headerName}</HeaderName>

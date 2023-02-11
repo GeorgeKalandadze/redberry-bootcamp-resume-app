@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import { Button } from '../../components/Button/Button'
 import Header from '../../components/Header/Header'
 import InputGroup from '../../components/InputGroup/InputGroup'
@@ -11,44 +10,17 @@ import {  useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { experienceFormSchema } from '../../schema/FormSchema'
+import { Experiences } from '../../types/MostUsableTypes'
 
-
-interface Experiences {
-  position: string;
-  employer: string;
-  start_date:string;
-  due_date:string;
-  description:string
-}
 
 const ExperiencePage = () => {
-  const {info,handleInputChange,handleAddClick} = useGlobalContext()
+  const {info,handleInputChange,handleAddClick,statusHandler} = useGlobalContext()
 
-  const {handleSubmit,register,formState:{errors},setError} = useForm<{experiences:Experiences[]}>({
+  const {handleSubmit,register,formState:{errors}} = useForm<{experiences:Experiences[]}>({
     resolver:yupResolver(experienceFormSchema)
 })
 
-  // const [inputList, setinputList]= useState([{ position: "",
-  // employer: "",
-  // start_date: "",
-  // due_date: "",
-  // description: ""}]);
 
-  //   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
-  //     const { id, value } = event.target;
-  //     const list = [...inputList];
-  //     list[index] = { ...list[index], [id]: value };
-  //     setinputList(list);
-  //   };
-
-
-  //   const handleaddclick = () => { 
-  //     setinputList([...inputList, { position: "",
-  //       employer: "",
-  //       start_date: "",
-  //       due_date: "",
-  //       description: "",}]);
-  //   }
 
     const navigate = useNavigate()
    
@@ -56,6 +28,7 @@ const ExperiencePage = () => {
       navigate('/education-page')
     }
 
+    console.log(errors)
   return (
     <FlexedDiv>
         <ExperiencePageContainer onSubmit={handleSubmit(onSubmit )}>
@@ -76,6 +49,7 @@ const ExperiencePage = () => {
                 }
                 id="position"
                 value={x.position}
+                status={statusHandler(errors.experiences?.[i]?.position, x.position)}
                 
             />
              <InputGroup
@@ -93,6 +67,7 @@ const ExperiencePage = () => {
                 
                 id="employer"
                 value={x.employer}
+                status={statusHandler(errors.experiences?.[i]?.employer, x.employer)}
             />
             <FlexedDiv >
                 <InputGroup 
@@ -108,6 +83,7 @@ const ExperiencePage = () => {
                     }
                     value={x.start_date}
                     id="start_date"
+                    status={statusHandler(errors.experiences?.[i]?.start_date, x.start_date)}
                     
                 />
                 <InputGroup 
@@ -124,17 +100,20 @@ const ExperiencePage = () => {
                     value={x.due_date}
                     
                     id={"due_date"}
+                    status={statusHandler(errors.experiences?.[i]?.due_date, x.due_date)}
                 />
             </FlexedDiv>
             <TextareaGroup
                 label='აღწერა'
                 register={register}
                 id={"description"}
-                name={`experiences.${i}.description`}
+                RegisterName={`experiences.${i}.description`}
                 placeholder='როლი თანამდებობაზე და ზოგადი აღწერა'
                 error={errors.experiences?.[i]?.description}
                 value={x.description}
                 changeHandler={e=>handleInputChange(e,i,'experience')}
+                status={statusHandler(errors.experiences?.[i]?.description, x.description)}
+                
             />
         </ExperienceContainer>
           )

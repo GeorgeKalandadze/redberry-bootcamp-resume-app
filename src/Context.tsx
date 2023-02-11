@@ -1,14 +1,16 @@
-import React, { ContextType, createContext, FunctionComponent, ReactNode, useContext, useState } from 'react';
-import { FieldError } from 'react-hook-form';
+import React, {  createContext, FunctionComponent, ReactNode, useContext, useState } from 'react';
+import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
 import { useSessionStorage } from './hooks/useSessionStorage';
+import { Educations, Experiences, ResumeObjectTypes } from './types/MostUsableTypes';
 
 type ContextTypes = {
-    handleChange:(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+    handleChange:(event: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => void
     info:ResumeObjectTypes
     handleImageChange:(event: React.ChangeEvent<HTMLInputElement>) => void
-    statusChanger:(error: FieldError | undefined, inputName: keyof ResumeObjectTypes) => "error" | "validated" | "default"
     handleAddClick:(type: 'experience' | 'education') => void
-    handleInputChange:(event: React.ChangeEvent<HTMLInputElement|HTMLSelectElement>, index: number, type: 'experience' | 'education') => void
+    handleInputChange:(event: React.ChangeEvent<HTMLInputElement|HTMLSelectElement|HTMLTextAreaElement>, index: number, type: 'experience' | 'education') => void
+    resetInfo:() => void
+    statusHandler: (error: FieldError | undefined, input: any) => "error" | "validated" | "default"
 }
 
 
@@ -18,39 +20,8 @@ type ContextChildType = {
     children: ReactNode
 }
 
-//resume object types
-interface ResumeObjectTypes {
-    name:string
-    surname:string
-    email:string
-    phone_number:string
-    experiences: Experiences[]
-    educations:Educations[]
-    image:string;
-    about_me:string;
-}
-
-
-type Experiences = {
-    position:string
-    employer:string
-    start_date:string
-    due_date:string
-    description:string
-}
-
-type Educations = {
-    university:string
-    degree:string
-    due_date:string
-    description:string
-}
-
-
-
-export const AppProvider:FunctionComponent<ContextChildType> = ({children}) => {
-const [info,setInfo] = useSessionStorage<ResumeObjectTypes>('resume-info',{
-    name:"",
+const resumeInfo = {
+  name:"",
     surname:"",
     email:"",
     phone_number:"",
@@ -62,21 +33,28 @@ const [info,setInfo] = useSessionStorage<ResumeObjectTypes>('resume-info',{
         description:"",
     }],
     educations:[{
-        university:"",
+        institute:"",
         degree:"",
         due_date:"",
         description:"",
+        degree_id:1,
     }],
     image:"",
     about_me:"",
-})
+}
 
+
+export const AppProvider:FunctionComponent<ContextChildType> = ({children}) => {
+const [info,setInfo] = useSessionStorage<ResumeObjectTypes>('resume-info',resumeInfo)
+const [degreeId, setDegreeId] = useState(2);
 
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const name = event.target.name;
         const value = event.target.value;
         setInfo((formData) => ({ ...formData, [name]: value }));
+       
+        
     };
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,15 +69,9 @@ const [info,setInfo] = useSessionStorage<ResumeObjectTypes>('resume-info',{
         }
       };
 
-      const statusChanger = (
-        error: FieldError | undefined,
-        inputName: keyof typeof info
-      ) => {
-        return error ? "error" : info[inputName] ? "validated" : "default";
-      };
 
 
-      const handleInputChange = (event: React.ChangeEvent<HTMLInputElement|HTMLSelectElement>, index: number, type: 'experience' | 'education') => {
+      const handleInputChange = (event: React.ChangeEvent<HTMLInputElement|HTMLSelectElement|HTMLTextAreaElement>, index: number, type: 'experience' | 'education') => {
         const { id, value } = event.target;
         let experiences: Experiences[];
         let educations: Educations[];
@@ -119,19 +91,30 @@ const [info,setInfo] = useSessionStorage<ResumeObjectTypes>('resume-info',{
           if (type === 'experience') {
             setInfo({
               ...info,
-              experiences: [...info.experiences,{position: '',employer: '',start_date: '',due_date: '',description: '',},      ],
+              experiences: [...info.experiences,{position: '',employer: '',start_date: '',due_date: '',description: '',},],
             });
           } else if (type === 'education') {
+            setDegreeId(degreeId + 1)
             setInfo({
               ...info,
-              educations: [...info.educations,{university: '',degree: '',due_date: '',description: '',},],
+              educations: [...info.educations,{institute: '',degree: '',due_date: '',description: '',degree_id:degreeId},],
             });
           }
         };
 
+        function resetInfo() {
+          setInfo(resumeInfo) 
+          sessionStorage.clear()
+        }
+
     
+        const statusHandler = (error: FieldError | Partial<{ type: string | number; message: string; }> | Merge<FieldError, FieldErrorsImpl<any>> | undefined, input: any) => {
+          return error ? "error" : input ? "validated" : "default";
+        };
+
+        // status={statusChanger(errors.name, infoData.name)}
     
-    return <AppContext.Provider value={{handleChange,info,handleImageChange,statusChanger,handleAddClick,handleInputChange}}>
+    return <AppContext.Provider value={{handleChange,info,handleImageChange,handleAddClick,handleInputChange,resetInfo,statusHandler}}>
         {children}
     </AppContext.Provider>
 }

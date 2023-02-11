@@ -17,34 +17,40 @@ const Resume = () => {
         <Section>
         <FlexedDiv>
             <div>
-                 <Name>{info.name}</Name>
-                <FlexedDiv>
-                    <img src={EmailIcon}/>
-                    <p>anzorr666@redberry.ge</p>
-                </FlexedDiv>
-                <FlexedDiv>
-                    <img src={MobileIcon}/>
-                    <p>+995 597 63 45 16</p>
-                </FlexedDiv>
-                <SectionHeader>ᲩᲔᲛ ᲨᲔᲡᲐᲮᲔᲑ</SectionHeader>
-                <InfoText>
-                    ძალიან მიყვარს დიზაინის კეთება. დილით ადრე რომ 
-                    ავდგები გამამხნევებელი ვარჯიშების მაგიერ დიზაინს ვაკეთებ. 
-                </InfoText>
+                 <Name>{info.name} {info.surname}</Name>
+                 {info.email && 
+                    <FlexedDiv>
+                        <img src={EmailIcon}/>
+                        <p>{info.email}</p>
+                    </FlexedDiv>
+                 }
+
+                 {info.phone_number && 
+                    <FlexedDiv>
+                        <img src={MobileIcon}/>
+                        <p>{info.phone_number}</p>
+                    </FlexedDiv>
+                 }
+                {info.about_me &&
+                    <>
+                    <SectionHeader>ᲩᲔᲛ ᲨᲔᲡᲐᲮᲔᲑ</SectionHeader>
+                     <InfoText>{info.about_me}</InfoText>
+                    </>  
+                }
             </div>
                 <StyledImage src={info.image}/>
         </FlexedDiv>
         </Section>
-        <Section>
+        {info.experiences.map((experience) => (
+            experience&&
+            <Section>
             <SectionHeader>ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ</SectionHeader>
-            <Skills>React Native Developer, </Skills>
-            <DateText>2020-09-23 - 2020-09-23</DateText>
-            <InfoText>
-                Experienced Javascript Native Developer with 5 years in the industry. 
-                proficient withreact. Used problem-solving aptitude to encahge application 
-                performance by 14%.created data visualisation tools and integrated designs. 
-            </InfoText>
-        </Section>
+            <Skills>{experience.position} {experience.employer}</Skills>
+            <DateText>{experience.start_date} - {experience.due_date}</DateText>
+            <InfoText>{experience.description}</InfoText>
+            </Section>
+        ))
+        }
         <Section>
             <SectionHeader>ᲒᲐᲜᲐᲗᲚᲔᲑᲐ</SectionHeader>
             <Skills>წმ. ანდრიას საპატრიარქოს სასწავლებელი, </Skills>
@@ -120,6 +126,7 @@ width: 246px;
 height: 246px;
 aspect-ratio:1/1;
 border-radius:50%;
+
 `
 
 const Skills = styled.p`
