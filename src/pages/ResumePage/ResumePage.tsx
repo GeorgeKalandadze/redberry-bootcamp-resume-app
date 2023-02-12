@@ -1,29 +1,28 @@
-import React, { useEffect } from 'react'
 import Resume from '../../components/Resume/Resume'
-import { useGlobalContext } from '../../Context'
-
+import styled from 'styled-components'
 
 const ResumePage = () => {
-const {info} = useGlobalContext()
 
-  useEffect(() => {
-    fetch(`https://resume.redberryinternship.ge/api/cvs`, {
-          method: 'POST', 
-          
-          headers: {
-              accept: "multipart/form-data",
-              'Content-Type': 'multipart/form-data'
-          },
-          body: JSON.stringify(info) 
-          })
-          .then(response => response.status === 201?console.log(response):null)
-          .catch(error => console.error(error));
-  },[])
   return (
-    <div>
+    <ResumeContainer>
+        <ResumeDiv>
         <Resume/>
-    </div>
+        </ResumeDiv>
+        
+    </ResumeContainer>
   )
 }
 
 export default ResumePage
+
+const ResumeContainer = styled.div`
+width:100%;
+display:flex;
+justify-content:center;
+`
+
+const ResumeDiv = styled.div`
+display:flex;
+justify-content:center;
+width:100%;
+`

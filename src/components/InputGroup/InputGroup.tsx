@@ -33,8 +33,12 @@ const InputGroup = ({width, label, placeHolder, inputType, hint, name, register,
   
   const registerType = register(name)
   return (
-    <StyledInputsContainer error={error} type={inputType} value={value} status={status}>
-        <StyledLabel error={error} status={status}>{label}</StyledLabel>
+    <StyledInputsContainer 
+      error={error} 
+      type={inputType} 
+      value={value} 
+      status={status}>
+        <StyledLabel>{label}</StyledLabel>
         <StyledInput 
           placeholder={placeHolder} 
           type={inputType} 
@@ -49,8 +53,10 @@ const InputGroup = ({width, label, placeHolder, inputType, hint, name, register,
           id={id}
           status={status}
         />
-        <StyledHint error={error} status={status}>{hint}</StyledHint>
-        
+        <StyledHint>{hint}</StyledHint>
+          
+           
+          
     </StyledInputsContainer>
   )
 }
@@ -79,12 +85,11 @@ position:relative;
 }
 `
 
-const StyledLabel = styled.label<InputStylePropTypes>`
+const StyledLabel = styled.label`
 font-style: normal;
 font-weight: 600;
 font-size: 16px;
 line-height: 21px;
-color: ${props => props.status === "error" ? "red": props.status === "validated"?"#98E37E":"black" };
 `
 
 const StyledInput = styled.input<InputStylePropTypes>`
@@ -102,11 +107,11 @@ border:1px solid;
 border-color: ${props => props.status === "error" ? "red": props.status === "validated"?"#98E37E":"#BCBCBC" };
 `
 
-const StyledHint = styled.p<InputStylePropTypes>`
+const StyledHint = styled.p`
 font-weight: 300;
 font-size: 14px;
 line-height: 21px;
-color: ${props => props.status === "error" ? "red": props.status === "validated"?"#98E37E":"black" };
+
 
 `
 

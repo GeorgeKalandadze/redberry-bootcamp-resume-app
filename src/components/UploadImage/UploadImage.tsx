@@ -20,7 +20,7 @@ const UploadImage = () => {
     <UploadImageContainer error={info.image}>
       <UploadImageText >პირადი ფოტოს ატვირთვა</UploadImageText>
         <StyledUploadButtonContainer>
-        <StyledUploadImage  type="file"   name="picture" /*{...register("picture")}*/  onChange={handleImageChange}/>
+        <StyledUploadImage  type="file"   name="picture" onChange={handleImageChange}/>
         <Button type='button' bgColor='#0E80BF;'   pdng='5px 10px'>ატვირთვა</Button>
         </StyledUploadButtonContainer>
     </UploadImageContainer>

@@ -1,4 +1,4 @@
-import React, {  createContext, FunctionComponent, ReactNode, useContext, useState } from 'react';
+import React, {  createContext, FunctionComponent, ReactNode, useContext, useEffect, useState } from 'react';
 import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
 import { useSessionStorage } from './hooks/useSessionStorage';
 import { Educations, Experiences, ResumeObjectTypes } from './types/MostUsableTypes';
@@ -10,7 +10,8 @@ type ContextTypes = {
     handleAddClick:(type: 'experience' | 'education') => void
     handleInputChange:(event: React.ChangeEvent<HTMLInputElement|HTMLSelectElement|HTMLTextAreaElement>, index: number, type: 'experience' | 'education') => void
     resetInfo:() => void
-    statusHandler: (error: FieldError | undefined, input: any) => "error" | "validated" | "default"
+    statusHandler: (error: FieldError | Partial<{ type: string | number; message: string; }> | Merge<FieldError, FieldErrorsImpl<any>> | undefined, input: any) => "error" | "validated" | "default"
+    quality:QualityTypes[]
 }
 
 
@@ -34,19 +35,33 @@ const resumeInfo = {
     }],
     educations:[{
         institute:"",
-        degree:"",
         due_date:"",
         description:"",
-        degree_id:1,
+        degree_id:"",
     }],
     image:"",
     about_me:"",
 }
 
+type QualityTypes = {
+  title:string
+  id:number
+}
+
 
 export const AppProvider:FunctionComponent<ContextChildType> = ({children}) => {
 const [info,setInfo] = useSessionStorage<ResumeObjectTypes>('resume-info',resumeInfo)
-const [degreeId, setDegreeId] = useState(2);
+const [quality, setQuality] = useState<QualityTypes[]>([]);
+
+    
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch('https://resume.redberryinternship.ge/api/degrees')
+            const data = await response.json();
+            setQuality(data)
+        }
+        fetchData()
+    },[])
 
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -69,10 +84,9 @@ const [degreeId, setDegreeId] = useState(2);
         }
       };
 
-
-
       const handleInputChange = (event: React.ChangeEvent<HTMLInputElement|HTMLSelectElement|HTMLTextAreaElement>, index: number, type: 'experience' | 'education') => {
         const { id, value } = event.target;
+      
         let experiences: Experiences[];
         let educations: Educations[];
         if (type === 'experience') {
@@ -94,27 +108,33 @@ const [degreeId, setDegreeId] = useState(2);
               experiences: [...info.experiences,{position: '',employer: '',start_date: '',due_date: '',description: '',},],
             });
           } else if (type === 'education') {
-            setDegreeId(degreeId + 1)
+            
             setInfo({
               ...info,
-              educations: [...info.educations,{institute: '',degree: '',due_date: '',description: '',degree_id:degreeId},],
+              educations: [...info.educations,{institute: '',due_date: '',description: '',degree_id:""},],
             });
           }
         };
 
-        function resetInfo() {
+       const resetInfo = () => {
           setInfo(resumeInfo) 
           sessionStorage.clear()
         }
 
-    
         const statusHandler = (error: FieldError | Partial<{ type: string | number; message: string; }> | Merge<FieldError, FieldErrorsImpl<any>> | undefined, input: any) => {
           return error ? "error" : input ? "validated" : "default";
         };
-
-        // status={statusChanger(errors.name, infoData.name)}
     
-    return <AppContext.Provider value={{handleChange,info,handleImageChange,handleAddClick,handleInputChange,resetInfo,statusHandler}}>
+    return <AppContext.Provider value={{
+        handleChange,
+        info,
+        handleImageChange,
+        handleAddClick,
+        handleInputChange,
+        resetInfo,
+        statusHandler,
+        quality
+        }}>
         {children}
     </AppContext.Provider>
 }

@@ -17,25 +17,18 @@ import { personalInfoFormSchema } from '../../schema/FormSchema'
 import { useNavigate } from 'react-router-dom'
 
 const PersonalInfo = () => {
-    const {info, handleChange,handleInputChange,statusHandler} = useGlobalContext()
+    const {info, handleChange,statusHandler} = useGlobalContext()
     
     const {handleSubmit,register,formState:{errors}} = useForm({
-        mode:"all",
-        resolver:yupResolver(personalInfoFormSchema),
-        
+        resolver:yupResolver(personalInfoFormSchema), 
     })
 
-    
-
-  
-    
     const navigate = useNavigate()
+
     const onSubmit = () => {
-        
         if(info.image){
             navigate('/experience-page')
         }
-         
     }
   return (
     <FlexedDiv>
@@ -81,7 +74,7 @@ const PersonalInfo = () => {
             value={info.about_me}
             changeHandler={handleChange}
             name="about_me"
-            // status={statusHandler(errors.about_me?.message, info.about_me)}
+            status={statusHandler(undefined, info.about_me)}
         />
         <InputGroup
             label='ელ.ფოსტა' 

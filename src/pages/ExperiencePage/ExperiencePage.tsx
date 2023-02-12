@@ -17,10 +17,9 @@ const ExperiencePage = () => {
   const {info,handleInputChange,handleAddClick,statusHandler} = useGlobalContext()
 
   const {handleSubmit,register,formState:{errors}} = useForm<{experiences:Experiences[]}>({
+    
     resolver:yupResolver(experienceFormSchema)
 })
-
-
 
     const navigate = useNavigate()
    
@@ -29,6 +28,7 @@ const ExperiencePage = () => {
     }
 
     console.log(errors)
+
   return (
     <FlexedDiv>
         <ExperiencePageContainer onSubmit={handleSubmit(onSubmit )}>
@@ -56,7 +56,6 @@ const ExperiencePage = () => {
                 label='დამსაქმებელი'
                 placeHolder='დამსაქმებელი'
                 name={`experiences.${i}.employer`}
-                
                 hint='მინიმუმ 2 სიმბოლო'
                 inputType='text'
                 register={register}

@@ -25,11 +25,6 @@ export const personalInfoFormSchema = yup.object().shape({
     .matches(/^(\+?995)?(79\d{7}|5\d{8})$/)
     .required(),
 
-    // picture: yup.mixed()
-    // .test('required', (value) =>{
-    //   return value && value.length
-    // }), 
-
 })
 
 
@@ -77,7 +72,6 @@ export const educationFormSchema = yup.object().shape({
     .min(3)
     .required(),
 
-    degree:yup.string().required()
-    
+    degree_id:yup.string().required()
   })), 
 })

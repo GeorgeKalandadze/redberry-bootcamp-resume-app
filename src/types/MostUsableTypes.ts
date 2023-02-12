@@ -22,8 +22,7 @@ export type Experiences = {
 
 export type Educations = {
     institute:string
-    degree:string
-    degree_id:number
+    degree_id:any|Blob
     due_date:string
     description:string
 }

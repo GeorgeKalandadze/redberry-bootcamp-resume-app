@@ -1,16 +1,12 @@
 import styled from 'styled-components';
 import EmailIcon from '../../assets/email-icon.png'
 import MobileIcon from '../../assets/mobile-icon.png'
-import AvatarImage from '../../assets/avatar-image.jpg'
 import RedberryRedIcon from '../../assets/redberry-red-logo.png'
 import { useGlobalContext } from '../../Context';
-import { useEffect, useState } from 'react';
 
 
 const Resume = () => {
     const {info} = useGlobalContext()
-    // const info =JSON.parse(sessionStorage.getItem('resume-info')) 
-
   return (
     <MainContainer>
     <StyledResumeContainer>
@@ -19,17 +15,17 @@ const Resume = () => {
             <div>
                  <Name>{info.name} {info.surname}</Name>
                  {info.email && 
-                    <FlexedDiv>
+                    <FlexedDiv2>
                         <img src={EmailIcon}/>
                         <p>{info.email}</p>
-                    </FlexedDiv>
+                    </FlexedDiv2>
                  }
 
                  {info.phone_number && 
-                    <FlexedDiv>
+                    <FlexedDiv2>
                         <img src={MobileIcon}/>
                         <p>{info.phone_number}</p>
-                    </FlexedDiv>
+                    </FlexedDiv2>
                  }
                 {info.about_me &&
                     <>
@@ -41,27 +37,28 @@ const Resume = () => {
                 <StyledImage src={info.image}/>
         </FlexedDiv>
         </Section>
-        {info.experiences.map((experience) => (
-            experience&&
-            <Section>
-            <SectionHeader>ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ</SectionHeader>
-            <Skills>{experience.position} {experience.employer}</Skills>
-            <DateText>{experience.start_date} - {experience.due_date}</DateText>
-            <InfoText>{experience.description}</InfoText>
-            </Section>
-        ))
+        {info.experiences.map((experience,index) => {
+            experience.position || experience.employer || experience.start_date || experience.due_date || experience.description 
+            return (
+                <Section key={index}>
+                {<SectionHeader>ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ</SectionHeader>}
+                <Skills>{experience.position} {experience.employer}</Skills>
+                <DateText>{experience.start_date} - {experience.due_date}</DateText>
+                <InfoText>{experience.description}</InfoText>
+                </Section>
+            )
+            
+        })
         }
-        <Section>
+        {info.educations.map((education,index) => (
+            <Section key={index}>
             <SectionHeader>ᲒᲐᲜᲐᲗᲚᲔᲑᲐ</SectionHeader>
-            <Skills>წმ. ანდრიას საპატრიარქოს სასწავლებელი, </Skills>
-            <DateText>2020-09-23</DateText>
-            <InfoText>
-                ვსწავლობდი გულმოდგინეთ. მყავდა ფრიადები. რაც შემეძლო — ვქენი. 
-                კომპიუტერები მიყვარდა. ვიჯექი ჩემთვის, ვაკაკუნებდი ამ კლავიშებზე. 
-                მეუნებოდნენ — დაჯექი, წაიკითხე რამე, რას აკაკუნებ, დრო მოვა და ჩაგიკაკუნებსო. 
-                აჰა, მოვიდა დრო და ვერა ვარ დეველოპერი?
-            </InfoText>
+            <Skills>{education.institute} {education.degree_id}</Skills>
+            <DateText>{education.due_date}</DateText>
+            <InfoText>{education.description}</InfoText>
         </Section>
+        ))}
+        
         
     </StyledResumeContainer>
         <RedberryRedLogo src={RedberryRedIcon}/>
@@ -77,6 +74,7 @@ height:1080px;
 display:flex;
 flex-direction:column;
 justify-content:space-between;
+margin-bottom:20px;
 `
 const StyledResumeContainer = styled.div`
 
@@ -90,6 +88,7 @@ const FlexedDiv= styled.div`
 display:flex;
 margin-top:15px;
 gap:15px;
+justify-content:space-between;
 `
 const Name = styled.h1`
 font-style: normal;
@@ -120,12 +119,15 @@ text-transform: lowercase;
 color: #000000;
 margin-top:15px;
 margin-bottom:20px;
+word-break:break-all;
 `
 const StyledImage = styled.img`
 width: 246px;
 height: 246px;
 aspect-ratio:1/1;
 border-radius:50%;
+float:left;
+margin-bottom:20px;
 
 `
 
@@ -150,6 +152,14 @@ const RedberryRedLogo = styled.img`
 width: 42px;
 height: 42px;
 `
+
+const FlexedDiv2 = styled.div`
+    display:flex;
+    margin-top:15px;
+    gap:15px
+`
+
+
 
 
 
