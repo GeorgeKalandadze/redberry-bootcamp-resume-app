@@ -6,7 +6,7 @@ type TextareaPropTypes = {
     register?:any
     RegisterName?:string
     id?:string
-    error?:any
+    
     value:string
     name?:string
     changeHandler?:(event: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => void
@@ -14,10 +14,10 @@ type TextareaPropTypes = {
 }
 
 type ErrorType = {
-  error:any
+  
   status: any
 }
-const TextareaGroup = ({label,placeholder,register = {},RegisterName,id,error,value,changeHandler,name,status}:TextareaPropTypes) => {
+const TextareaGroup = ({label,placeholder,register = {},RegisterName,id,value,changeHandler,name,status}:TextareaPropTypes) => {
   const registerType = RegisterName ? register(RegisterName) : null;
   return (
     <TextAreraContainer>
@@ -27,7 +27,7 @@ const TextareaGroup = ({label,placeholder,register = {},RegisterName,id,error,va
           id={id} 
           rows={5} 
           placeholder={placeholder}  
-          error={error} 
+          
           {...(registerType || {})} 
           value={value} 
           onChange={e => {
@@ -64,5 +64,4 @@ const StyledLabel = styled.label`
 font-weight: 600;
 font-size: 16px;
 line-height: 21px;
-
 `

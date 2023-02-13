@@ -1,25 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react'
 import { Button } from '../../components/Button/Button'
 import Header from '../../components/Header/Header'
 import InputGroup from '../../components/InputGroup/InputGroup'
 import Resume from '../../components/Resume/Resume'
 import TextareaGroup from '../../components/TextareaGroup/TextareaGroup'
 import { useGlobalContext } from '../../Context'
-import { 
-    PersonalInfoContainer,
-    FlexedDiv,
-    ButtonContainer
-} from './PersonalInfo.style'
 import UploadImage from '../../components/UploadImage/UploadImage'
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { personalInfoFormSchema } from '../../schema/FormSchema'
 import { useNavigate } from 'react-router-dom'
+import { ButtonContainer, FlexedDiv, FormContainer } from '../../styles/Form.styles'
 
 const PersonalInfo = () => {
     const {info, handleChange,statusHandler} = useGlobalContext()
     
     const {handleSubmit,register,formState:{errors}} = useForm({
+        mode:"onChange",
         resolver:yupResolver(personalInfoFormSchema), 
     })
 
@@ -32,7 +28,7 @@ const PersonalInfo = () => {
     }
   return (
     <FlexedDiv>
-    <PersonalInfoContainer onSubmit={handleSubmit(onSubmit)}>
+    <FormContainer onSubmit={handleSubmit(onSubmit)}>
         <Header
             headerName='ᲞᲘᲠᲐᲓᲘ ᲘᲜᲤᲝ'
             pageNumber={1}
@@ -101,13 +97,11 @@ const PersonalInfo = () => {
             value={info.phone_number}
             changeHandler={handleChange}
             status={statusHandler(errors.phone_number , info.phone_number)}
-            
-            
         />
         <ButtonContainer>
             <Button bgColor='#6B40E3' type='submit' >შემდეგი</Button>
         </ButtonContainer>
-    </PersonalInfoContainer>
+    </FormContainer>
     <Resume />
     </FlexedDiv>
   )

@@ -3,6 +3,17 @@ import EmailIcon from '../../assets/email-icon.png'
 import MobileIcon from '../../assets/mobile-icon.png'
 import RedberryRedIcon from '../../assets/redberry-red-logo.png'
 import { useGlobalContext } from '../../Context';
+import { 
+    Section,
+    FlexedDiv,
+    Name,
+    SectionHeader,
+    InfoText,
+    StyledImage,
+    Skills,
+    DateText,
+    RedberryRedLogo } 
+from '../../styles/Resume.styles';
 
 
 const Resume = () => {
@@ -10,56 +21,62 @@ const Resume = () => {
   return (
     <MainContainer>
     <StyledResumeContainer>
-        <Section>
-        <FlexedDiv>
-            <div>
-                 <Name>{info.name} {info.surname}</Name>
-                 {info.email && 
-                    <FlexedDiv2>
-                        <img src={EmailIcon}/>
-                        <p>{info.email}</p>
-                    </FlexedDiv2>
-                 }
+            <Section>
+            <FlexedDiv>
+                <div>
+                    <Name>{info.name} {info.surname}</Name>
+                    {info.email && 
+                        <FlexedDiv2>
+                            <img src={EmailIcon}/>
+                            <p>{info.email}</p>
+                        </FlexedDiv2>
+                    }
 
-                 {info.phone_number && 
-                    <FlexedDiv2>
-                        <img src={MobileIcon}/>
-                        <p>{info.phone_number}</p>
-                    </FlexedDiv2>
-                 }
-                {info.about_me &&
-                    <>
-                    <SectionHeader>ᲩᲔᲛ ᲨᲔᲡᲐᲮᲔᲑ</SectionHeader>
-                     <InfoText>{info.about_me}</InfoText>
-                    </>  
-                }
-            </div>
-                <StyledImage src={info.image}/>
-        </FlexedDiv>
-        </Section>
+                    {info.phone_number && 
+                        <FlexedDiv2>
+                            <img src={MobileIcon}/>
+                            <p>{info.phone_number}</p>
+                        </FlexedDiv2>
+                    }
+                    {info.about_me &&
+                        <>
+                        <SectionHeader>ᲩᲔᲛ ᲨᲔᲡᲐᲮᲔᲑ</SectionHeader>
+                        <InfoText>{info.about_me}</InfoText>
+                        </>  
+                    }
+                </div>
+                    <StyledImage src={info.image}/>
+            </FlexedDiv>
+            </Section>
         {info.experiences.map((experience,index) => {
-            experience.position || experience.employer || experience.start_date || experience.due_date || experience.description 
-            return (
-                <Section key={index}>
-                {<SectionHeader>ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ</SectionHeader>}
-                <Skills>{experience.position} {experience.employer}</Skills>
-                <DateText>{experience.start_date} - {experience.due_date}</DateText>
-                <InfoText>{experience.description}</InfoText>
-                </Section>
-            )
-            
+
+            if(experience.description || experience.position || experience.employer || experience.due_date ){
+                return (
+                    <Section key={index}>
+                    {<SectionHeader>ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ</SectionHeader>}
+                    <Skills>{experience.position} {experience.employer}</Skills>
+                    <DateText>{experience.start_date} - {experience.due_date}</DateText>
+                    <InfoText>{experience.description}</InfoText>
+                    </Section>
+                )
+            }
         })
         }
-        {info.educations.map((education,index) => (
-            <Section key={index}>
-            <SectionHeader>ᲒᲐᲜᲐᲗᲚᲔᲑᲐ</SectionHeader>
-            <Skills>{education.institute} {education.degree_id}</Skills>
-            <DateText>{education.due_date}</DateText>
-            <InfoText>{education.description}</InfoText>
-        </Section>
-        ))}
-        
-        
+        {info.educations.map((experience,index) => {
+
+            if(experience.description || experience.institute || experience.due_date || experience.degree_id ){
+                return (
+                    <Section key={index}>
+                    {<SectionHeader>ᲒᲐᲜᲐᲗᲚᲔᲑᲐ</SectionHeader>}
+                    <Skills>{experience.institute} {experience.due_date}</Skills>
+                    <DateText>{experience.degree_id} - {experience.due_date}</DateText>
+                    <InfoText>{experience.description}</InfoText>
+                    </Section>
+                )
+            }
+            })
+            }
+           
     </StyledResumeContainer>
         <RedberryRedLogo src={RedberryRedIcon}/>
     </MainContainer>
@@ -80,83 +97,12 @@ const StyledResumeContainer = styled.div`
 
 `
 
-const Section = styled.div`
-border-bottom: 1px solid #C8C8C8;
-`
 
-const FlexedDiv= styled.div`
-display:flex;
-margin-top:15px;
-gap:15px;
-justify-content:space-between;
-`
-const Name = styled.h1`
-font-style: normal;
-font-weight: 700;
-font-size: 34px;
-line-height: 42px;
-color: #F93B1D;
-margin-bottom:20px;
-`
-
-const SectionHeader = styled.p`
-margin-top:30px;
-font-family: 'Helvetica Neue';
-font-style: normal;
-font-weight: 700;
-font-size: 18px;
-line-height: 22px;
-color: #F93B1D;
-margin-bottom:15px;
-`
-
-const InfoText = styled.p`
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 22px;
-text-transform: lowercase;
-color: #000000;
-margin-top:15px;
-margin-bottom:20px;
-word-break:break-all;
-`
-const StyledImage = styled.img`
-width: 246px;
-height: 246px;
-aspect-ratio:1/1;
-border-radius:50%;
-float:left;
-margin-bottom:20px;
-
-`
-
-const Skills = styled.p`
-font-weight: 600;
-font-size: 16px;
-line-height: 20px;
-color: #1A1A1A;
-`
-
-const DateText = styled.p`
-
-font-style: italic;
-font-weight: 400;
-font-size: 16px;
-line-height: 19px;
-color: #919191;
-margin-top:15px;
-`
-
-const RedberryRedLogo = styled.img`
-width: 42px;
-height: 42px;
-`
 
 const FlexedDiv2 = styled.div`
-    display:flex;
-    margin-top:15px;
-    gap:15px
+display:flex;
+margin-top:15px;
+gap:15px
 `
 
 

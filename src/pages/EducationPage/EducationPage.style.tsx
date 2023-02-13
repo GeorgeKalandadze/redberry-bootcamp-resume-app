@@ -14,14 +14,5 @@ border-bottom:1px solid #C1C1C1;
 padding-bottom:50px;
 
 `
-export const FlexedDiv = styled.div`
-display:flex;
-justify-content:space-between;
-`
 
-export const ButtonsContainer = styled.div`
-margin-top:200px;
-display:flex;
-justify-content:space-between;
-`
 

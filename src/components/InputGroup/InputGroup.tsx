@@ -11,7 +11,6 @@ type InputPropTypes = {
   placeHolder?:string
   name?:string
   register?:any
-  error?:any
   value?:string|number
   changeHandler?:((event: React.ChangeEvent<HTMLInputElement>) => void) | undefined
   id?:string
@@ -20,7 +19,6 @@ type InputPropTypes = {
 }
 
 type InputStylePropTypes = {
-error?:string
 type?:string
 value?:string|number
 valid?:string
@@ -29,12 +27,11 @@ status: any
 
 
 
-const InputGroup = ({width, label, placeHolder, inputType, hint, name, register,error,value,changeHandler,id,status}:InputPropTypes ) => { 
+const InputGroup = ({width, label, placeHolder, inputType, hint, name, register,value,changeHandler,id,status}:InputPropTypes ) => { 
   
   const registerType = register(name)
   return (
     <StyledInputsContainer 
-      error={error} 
       type={inputType} 
       value={value} 
       status={status}>
@@ -49,7 +46,7 @@ const InputGroup = ({width, label, placeHolder, inputType, hint, name, register,
           onChange={(e) => {registerType.onChange(e);if (changeHandler) {
             changeHandler(e);
           }}}
-          error={error}
+          
           id={id}
           status={status}
         />
@@ -78,7 +75,7 @@ position:relative;
     background-size: 16px;
     background-repeat: no-repeat;
     position: absolute;
-    right:${prop => prop.error?"-0px":"-5px"} ;
+    right:${prop => prop.status === "error" ? "-0px":"-10px"} ;
     top: 40%;
     width: 30px;
     height: 30px;

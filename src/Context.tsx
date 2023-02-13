@@ -2,6 +2,7 @@ import React, {  createContext, FunctionComponent, ReactNode, useContext, useEff
 import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
 import { useSessionStorage } from './hooks/useSessionStorage';
 import { Educations, Experiences, ResumeObjectTypes } from './types/MostUsableTypes';
+import axios from 'axios';
 
 type ContextTypes = {
     handleChange:(event: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => void
@@ -12,6 +13,8 @@ type ContextTypes = {
     resetInfo:() => void
     statusHandler: (error: FieldError | Partial<{ type: string | number; message: string; }> | Merge<FieldError, FieldErrorsImpl<any>> | undefined, input: any) => "error" | "validated" | "default"
     quality:QualityTypes[]
+    sendData: () => void
+    finalResumeResponse:ResumeObjectTypes
 }
 
 
@@ -52,8 +55,8 @@ type QualityTypes = {
 export const AppProvider:FunctionComponent<ContextChildType> = ({children}) => {
 const [info,setInfo] = useSessionStorage<ResumeObjectTypes>('resume-info',resumeInfo)
 const [quality, setQuality] = useState<QualityTypes[]>([]);
+const [finalResumeResponse, setFinalResumeResponse] = useSessionStorage('finl-resume-info',{} as ResumeObjectTypes)
 
-    
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetch('https://resume.redberryinternship.ge/api/degrees')
@@ -111,7 +114,7 @@ const [quality, setQuality] = useState<QualityTypes[]>([]);
             
             setInfo({
               ...info,
-              educations: [...info.educations,{institute: '',due_date: '',description: '',degree_id:""},],
+              educations: [...info.educations,{institute: '',due_date: '',description: '',degree_id:" "},],
             });
           }
         };
@@ -121,9 +124,94 @@ const [quality, setQuality] = useState<QualityTypes[]>([]);
           sessionStorage.clear()
         }
 
+        //change status of validation messages
         const statusHandler = (error: FieldError | Partial<{ type: string | number; message: string; }> | Merge<FieldError, FieldErrorsImpl<any>> | undefined, input: any) => {
           return error ? "error" : input ? "validated" : "default";
         };
+
+        //send data 
+        const degreeIdHandler = (edu:any) => {
+          if(edu === "საშუალო სკოლის დიპლომი"){
+              return 1
+          }
+          if(edu === "ზოგადსაგანმანათლებლო დიპლომი"){
+              return 2
+          }
+          if(edu === "ბაკალავრი"){
+              return 3
+          }
+          if(edu === "მაგისტრი"){
+              return 4
+          }
+          if(edu === "დოქტორი"){
+              return 5
+          }
+          if(edu === "ასოცირებული ხარისხი"){
+              return 6
+          }
+          if(edu === "სტუდენტი"){
+              return 7
+          }
+          if(edu === "კოლეჯი(ხარისიხს გარეშე)"){
+              return 8
+          }
+          if(edu === "სხვა"){
+              return 9
+          }
+      }
+
+
+      const sendData = () => {
+          const newResumeInfo = {
+              ...info, educations:info.educations.map((edu) => {
+                  return {...edu, degree_id:degreeIdHandler(edu.degree_id)}
+              })
+          }
+          const formData = new FormData();
+          formData.append("name", newResumeInfo.name);
+          formData.append("surname", newResumeInfo.surname);
+          formData.append("email", newResumeInfo.email);
+          formData.append("phone_number", newResumeInfo.phone_number);
+          
+          newResumeInfo.experiences.forEach((experience, index) => {
+              formData.append(`experiences[${index}][position]`, experience.position);
+              formData.append(`experiences[${index}][employer]`, experience.employer);
+              formData.append(`experiences[${index}][start_date]`, experience.start_date);
+              formData.append(`experiences[${index}][due_date]`, experience.due_date);
+              formData.append(`experiences[${index}][description]`, experience.description);
+            });
+            
+            newResumeInfo.educations.forEach((education, index) => {
+              formData.append(`educations[${index}][institute]`, education.institute);
+              formData.append(`educations[${index}][due_date]`, education.due_date);
+              formData.append(`educations[${index}][description]`, education.description);
+              const degreeId = education.degree_id ? education.degree_id.toString() : "";
+              formData.append(`educations[${index}][degree_id]`, degreeId);
+            });
+          
+          fetch(newResumeInfo.image)
+            .then((response) => response.blob())
+            .then((blob) => {
+              formData.append("image", blob, "image.png");
+              axios({
+                method: "POST",
+                url: "https://resume.redberryinternship.ge/api/cvs",
+                data: formData,
+                headers: { "Content-Type": "multipart/form-data" },
+              })
+                .then(function (response) {
+                 
+                  setFinalResumeResponse(response.data)
+                })
+                .catch(function (response) {
+                  console.log(response);
+                });
+            });
+          formData.append("about_me", newResumeInfo.about_me);
+      }
+
+
+
     
     return <AppContext.Provider value={{
         handleChange,
@@ -133,7 +221,9 @@ const [quality, setQuality] = useState<QualityTypes[]>([]);
         handleInputChange,
         resetInfo,
         statusHandler,
-        quality
+        quality,
+        sendData,
+        finalResumeResponse
         }}>
         {children}
     </AppContext.Provider>

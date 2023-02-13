@@ -3,7 +3,7 @@ import Header from '../../components/Header/Header'
 import InputGroup from '../../components/InputGroup/InputGroup'
 import Resume from '../../components/Resume/Resume'
 import TextareaGroup from '../../components/TextareaGroup/TextareaGroup'
-import { FlexedDiv, ExperiencePageContainer ,ButtonsContainer } from './ExperiencePage.style'
+
 import styled from 'styled-components'
 import { useGlobalContext } from '../../Context'
 import {  useNavigate } from 'react-router-dom'
@@ -11,6 +11,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { experienceFormSchema } from '../../schema/FormSchema'
 import { Experiences } from '../../types/MostUsableTypes'
+import { ButtonsContainer, FlexedDiv, FormContainer } from '../../styles/Form.styles'
 
 
 const ExperiencePage = () => {
@@ -27,11 +28,9 @@ const ExperiencePage = () => {
       navigate('/education-page')
     }
 
-    console.log(errors)
-
   return (
     <FlexedDiv>
-        <ExperiencePageContainer onSubmit={handleSubmit(onSubmit )}>
+        <FormContainer onSubmit={handleSubmit(onSubmit )}>
         <Header headerName='ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ' pageNumber={2}/>
         {info.experiences.map((x,i)=>{
           return(
@@ -44,9 +43,6 @@ const ExperiencePage = () => {
                 inputType='text'
                 register={register}
                 changeHandler={ e=>handleInputChange(e,i,'experience')}
-                error={
-                  errors.experiences?.[i]?.position
-                }
                 id="position"
                 value={x.position}
                 status={statusHandler(errors.experiences?.[i]?.position, x.position)}
@@ -60,10 +56,6 @@ const ExperiencePage = () => {
                 inputType='text'
                 register={register}
                 changeHandler={ e=>handleInputChange(e,i,'experience')}
-                error={
-                  errors.experiences?.[i]?.employer
-                }
-                
                 id="employer"
                 value={x.employer}
                 status={statusHandler(errors.experiences?.[i]?.employer, x.employer)}
@@ -77,9 +69,6 @@ const ExperiencePage = () => {
                     inputType='date'
                     register={register}
                     changeHandler={ e=>handleInputChange(e,i,'experience')}
-                    error={
-                      errors.experiences?.[i]?.start_date
-                    }
                     value={x.start_date}
                     id="start_date"
                     status={statusHandler(errors.experiences?.[i]?.start_date, x.start_date)}
@@ -93,9 +82,6 @@ const ExperiencePage = () => {
                     inputType='date'
                     register={register}
                     changeHandler={ e=>handleInputChange(e,i,'experience')}
-                    error={
-                      errors.experiences?.[i]?.due_date
-                    }
                     value={x.due_date}
                     
                     id={"due_date"}
@@ -108,7 +94,6 @@ const ExperiencePage = () => {
                 id={"description"}
                 RegisterName={`experiences.${i}.description`}
                 placeholder='როლი თანამდებობაზე და ზოგადი აღწერა'
-                error={errors.experiences?.[i]?.description}
                 value={x.description}
                 changeHandler={e=>handleInputChange(e,i,'experience')}
                 status={statusHandler(errors.experiences?.[i]?.description, x.description)}
@@ -126,7 +111,7 @@ const ExperiencePage = () => {
             <Button bgColor='#6B40E3;' pdng='10px 35px'>უკან</Button>
             <Button bgColor='#6B40E3;' pdng='10px 35px' type='submit'>შემდეგი</Button>
         </ButtonsContainer>
-        </ExperiencePageContainer >
+        </FormContainer >
         <Resume />
     </FlexedDiv>
   )

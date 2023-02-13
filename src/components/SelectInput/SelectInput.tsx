@@ -11,9 +11,8 @@ type SelectInputPropTypes= {
     error:any
     register:any
     name:string
-    // changeHandler:(event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, index: number, type: 'experience' | 'education') => void
     changeHandler?:((event: React.ChangeEvent<HTMLSelectElement>) => void) | undefined
-    value:string|number
+    value:string | undefined
     id:string | undefined
     status:any
 }
@@ -26,27 +25,6 @@ type SelectInputStyle = {
 
 const SelectInput = ({error,register,name,changeHandler,value,id,status}:SelectInputPropTypes ) => {
     const {quality} = useGlobalContext()
-    // const [quality, setQuality] = useState<QualityTypes[]>([]);
-    
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         const response = await fetch('https://resume.redberryinternship.ge/api/degrees')
-    //         const data = await response.json();
-    //         setQuality(data)
-    //     }
-    //     fetchData()
-    // },[])
-
-    // const handleSelectChange = (e) => {
-    //     const selectedId = quality.find(item => item.title === e.target.value)?.id;
-    //     console.log(selectedId)
-    //     changeHandler(e, selectedId);
-    //   }
-
-    // const handleSelectChange = (e) => {
-    //     const selectedId = quality.find(item => item.title === e.target.value)?.id;
-    //     changeHandler(e, selectedId,'education');
-    //   }
       const registerType = register(name)
 
     return (
@@ -65,7 +43,7 @@ const SelectInput = ({error,register,name,changeHandler,value,id,status}:SelectI
                 {
                     quality.map((item) => (
                         <>
-                        <option value="none" className="opt" selected disabled hidden>აირჩიეთ ხარისხი</option>
+                        <option value="none"   disabled hidden>აირჩიეთ ხარისხი</option>
                         <StyledOptions key={item.id} value={item.title} >{item.title}</StyledOptions>
                         </>
                       

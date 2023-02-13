@@ -13,9 +13,7 @@ type ErrorProps = {
 
 const UploadImage = () => {
   const {handleImageChange,info} = useGlobalContext()
-
   
-
   return (
     <UploadImageContainer error={info.image}>
       <UploadImageText >პირადი ფოტოს ატვირთვა</UploadImageText>
@@ -39,7 +37,7 @@ margin-bottom:50px;
 &::after{
   content: '';
    ;
-    background-image:url(${prop => prop.error &&  prop.error === "" ? ErrorImage : prop.error !=="" ? SuccessImage: null});
+    background-image:url(${prop =>  prop.error === "" ? ErrorImage : prop.error !=="" ? SuccessImage: null});
     background-size: 16px;
     background-repeat: no-repeat;
     position: absolute;
