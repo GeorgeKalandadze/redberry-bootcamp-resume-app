@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useGlobalContext } from '../../Context';
+import { useGlobalContext } from '../../context/Context';
 
 
 type SelectInputPropTypes= {
@@ -14,8 +14,6 @@ type SelectInputPropTypes= {
 type SelectInputStyle = {
     status: any
 }
-
-
 
 const SelectInput = ({register,name,changeHandler,value,id,status}:SelectInputPropTypes ) => {
     const {quality} = useGlobalContext()

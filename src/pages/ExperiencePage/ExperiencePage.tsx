@@ -4,7 +4,7 @@ import InputGroup from '../../components/InputGroup/InputGroup'
 import Resume from '../../components/Resume/Resume'
 import TextareaGroup from '../../components/TextareaGroup/TextareaGroup'
 import styled from 'styled-components'
-import { useGlobalContext } from '../../Context'
+import { useGlobalContext } from '../../context/Context'
 import {  useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';

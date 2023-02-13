@@ -1,6 +1,6 @@
 
 import styled from 'styled-components'
-import { useGlobalContext } from '../../Context'
+import { useGlobalContext } from '../../context/Context'
 import { Button } from '../Button/Button'
 import SuccessImage from '../../assets/success-icon.png'
 import ErrorImage from '../../assets/error-icon.png'

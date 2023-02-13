@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import EmailIcon from '../../assets/email-icon.png'
 import MobileIcon from '../../assets/mobile-icon.png'
 import RedberryRedIcon from '../../assets/redberry-red-logo.png'
-import { useGlobalContext } from '../../Context';
+import { useGlobalContext } from '../../context/Context';
 import { 
     Section,
     FlexedDiv,

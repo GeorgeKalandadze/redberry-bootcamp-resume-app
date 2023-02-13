@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import ArrowIcon from '../../assets/arrow.png'
-import { useGlobalContext } from "../../Context"
+import { useGlobalContext } from "../../context/Context"
 type HeaderTypes = {
     headerName:string
     pageNumber:number

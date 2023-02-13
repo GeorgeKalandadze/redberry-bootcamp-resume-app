@@ -1,7 +1,7 @@
 import React, {  createContext, FunctionComponent, ReactNode, useContext, useEffect, useState } from 'react';
 import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
-import { useSessionStorage } from './hooks/useSessionStorage';
-import { Educations, Experiences, ResumeObjectTypes } from './types/MostUsableTypes';
+import { useSessionStorage } from '../hooks/useSessionStorage';
+import { Educations, Experiences, ResumeObjectTypes } from '../types/MostUsableTypes';
 import axios from 'axios';
 
 type ContextTypes = {

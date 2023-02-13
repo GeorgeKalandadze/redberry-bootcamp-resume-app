@@ -3,7 +3,7 @@ import Header from '../../components/Header/Header'
 import InputGroup from '../../components/InputGroup/InputGroup'
 import Resume from '../../components/Resume/Resume'
 import TextareaGroup from '../../components/TextareaGroup/TextareaGroup'
-import { useGlobalContext } from '../../Context'
+import { useGlobalContext } from '../../context/Context'
 import UploadImage from '../../components/UploadImage/UploadImage'
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';

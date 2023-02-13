@@ -7,7 +7,7 @@ import InputGroup from '../../components/InputGroup/InputGroup';
 import Resume from '../../components/Resume/Resume';
 import SelectInput from '../../components/SelectInput/SelectInput';
 import TextareaGroup from '../../components/TextareaGroup/TextareaGroup';
-import { useGlobalContext } from '../../Context';
+import { useGlobalContext } from '../../context/Context';
 import { educationFormSchema } from '../../schema/FormSchema'
 import { ButtonsContainer, FlexedDiv } from '../../styles/Form.styles';
 import { Educations } from '../../types/MostUsableTypes';
