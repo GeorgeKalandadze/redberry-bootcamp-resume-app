@@ -118,7 +118,7 @@ const [finalResumeResponse, setFinalResumeResponse] = useSessionStorage('final-r
             
             setInfo({
               ...info,
-              educations: [...info.educations,{institute: '',due_date: '',description: '',degree_id:" "},],
+              educations: [...info.educations,{institute: '',due_date: '',description: '',degree_id:""},],
             });
           }
         };

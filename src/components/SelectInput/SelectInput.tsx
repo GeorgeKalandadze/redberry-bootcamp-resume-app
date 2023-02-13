@@ -19,7 +19,8 @@ type SelectInputStyle = {
 
 const SelectInput = ({register,name,changeHandler,value,id,status}:SelectInputPropTypes ) => {
     const {quality} = useGlobalContext()
-      const registerType = register(name)
+    
+      const registerType = register(name,{required:true})
 
     return (
         <StyldeDropdownContainer>

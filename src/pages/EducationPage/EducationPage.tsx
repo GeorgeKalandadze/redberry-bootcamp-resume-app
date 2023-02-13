@@ -24,6 +24,7 @@ const EducationPage = () => {
 
     const navigate = useNavigate()
     const onSubmit = () => {
+        
         sendData()
         navigate('/resume-page')
     }
@@ -56,12 +57,12 @@ const EducationPage = () => {
                             <SelectInput 
                                 name={`education[${i}].degree_id`}
                                 register={register} 
-                                
                                 changeHandler={ e=>handleInputChange(e,i,'education')}
                                 value={x.degree_id}
                                 id={'degree_id'}
                                 status={statusHandler(errors.education?.[i]?.degree_id, x.degree_id)}
                             />
+                           
                             <InputGroup
                                 name={`education[${i}].due_date`}
                                 register={register}
