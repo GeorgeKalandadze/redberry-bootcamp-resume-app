@@ -21,33 +21,37 @@ const Resume = () => {
   return (
     <MainContainer>
     <StyledResumeContainer>
-            <Section>
-            <FlexedDiv>
-                <div>
-                    <Name>{info.name} {info.surname}</Name>
-                    {info.email && 
-                        <FlexedDiv2>
-                            <img src={EmailIcon}/>
-                            <p>{info.email}</p>
-                        </FlexedDiv2>
-                    }
+   { (info.name || info.surname || info.email || info.phone_number || info.image || info.about_me) && (
+    <Section>
+      <FlexedDiv>
+        <div>
+          <Name>{info.name} {info.surname}</Name>
+          {info.email && (
+            <FlexedDiv2>
+              <img src={EmailIcon} />
+              <p>{info.email}</p>
+            </FlexedDiv2>
+          )}
 
-                    {info.phone_number && 
-                        <FlexedDiv2>
-                            <img src={MobileIcon}/>
-                            <p>{info.phone_number}</p>
-                        </FlexedDiv2>
-                    }
-                    {info.about_me &&
-                        <>
-                        <SectionHeader>ᲩᲔᲛ ᲨᲔᲡᲐᲮᲔᲑ</SectionHeader>
-                        <InfoText>{info.about_me}</InfoText>
-                        </>  
-                    }
-                </div>
-                    <StyledImage src={info.image}/>
-            </FlexedDiv>
-            </Section>
+          {info.phone_number && (
+            <FlexedDiv2>
+              <img src={MobileIcon} />
+              <p>{info.phone_number}</p>
+            </FlexedDiv2>
+          )}
+          {info.about_me && (
+            <>
+              <SectionHeader>ᲩᲔᲛ ᲨᲔᲡᲐᲮᲔᲑ</SectionHeader>
+              <InfoText>{info.about_me}</InfoText>
+            </>
+          )}
+        </div>
+        <StyledImage src={info.image} />
+      </FlexedDiv>
+    </Section>
+  )
+}
+            
         {info.experiences.map((experience,index) => {
 
             if(experience.description || experience.position || experience.employer || experience.due_date ){

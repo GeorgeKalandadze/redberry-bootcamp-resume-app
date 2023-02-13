@@ -34,7 +34,7 @@ const SelectInput = ({register,name,changeHandler,value,id,status}:SelectInputPr
                     changeHandler(e);
                   }}} 
                 id={id} 
-                value={value || ""}> 
+                value={value}> 
                 {
                     quality.map((item) => (
                         <>
