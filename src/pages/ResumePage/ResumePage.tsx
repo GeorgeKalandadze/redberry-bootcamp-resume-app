@@ -17,15 +17,21 @@ import {
     DateText,
     RedberryRedLogo } 
 from '../../styles/Resume.styles';
+import { useNavigate } from 'react-router-dom';
 
 const ResumePage = () => {
     const [closeModal, setCloseModal] = useState(true)
-    const {finalResumeResponse} = useGlobalContext()
-    
+    const {finalResumeResponse,resetLastSavedInfo} = useGlobalContext()
+    const navigate = useNavigate()
+
+    const clearEverithing = () => {
+        resetLastSavedInfo()
+        navigate('/')
+    }
   return (
     <ResumeContainer>
-        <ArrowImageContainer >
-      <img src={ArrowIcon}/>
+        <ArrowImageContainer onClick={clearEverithing}>
+      <img src={ArrowIcon} />
       </ArrowImageContainer>
         <MainContainer>
     <div>
@@ -56,7 +62,7 @@ const ResumePage = () => {
                     <StyledImage src={`https://resume.redberryinternship.ge${finalResumeResponse.image}`}/>
             </FlexedDiv>
             </Section>
-        {finalResumeResponse.experiences.map((experience,index) => {
+        {finalResumeResponse.experiences && finalResumeResponse.experiences.map((experience,index) => {
 
             if(experience.description || experience.position || experience.employer || experience.due_date ){
                 return (
@@ -70,7 +76,7 @@ const ResumePage = () => {
             }
         })
         }
-        {finalResumeResponse.educations.map((experience,index) => {
+        {finalResumeResponse.educations && finalResumeResponse.educations.map((experience,index) => {
 
             if(experience.description || experience.institute || experience.due_date || experience.degree_id ){
                 return (
@@ -150,7 +156,7 @@ position:relative;
 
 const CloseModal = styled.img`
 position: absolute;
-top:0%;
+top:15%;
 right:5%;
 `
 

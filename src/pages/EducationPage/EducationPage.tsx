@@ -27,6 +27,8 @@ const EducationPage = () => {
         sendData()
         navigate('/resume-page')
     }
+
+    console.log(errors)
    
 
 
@@ -54,7 +56,7 @@ const EducationPage = () => {
                             <SelectInput 
                                 name={`education[${i}].degree_id`}
                                 register={register} 
-                                error={errors.education?.[i]?.degree_id} 
+                                
                                 changeHandler={ e=>handleInputChange(e,i,'education')}
                                 value={x.degree_id}
                                 id={'degree_id'}
@@ -67,7 +69,6 @@ const EducationPage = () => {
                                 inputType='date'
                                 width='370px'
                                 changeHandler={ e=>handleInputChange(e,i,'education')}
-                                
                                 value={x.due_date}
                                 id={"due_date"}
                                 status={statusHandler(errors.education?.[i]?.due_date, x.due_date)}
@@ -89,7 +90,7 @@ const EducationPage = () => {
             }
              <Button bgColor='#62A1EB' type='button' onClick={() => handleAddClick('education')}>მეტი განათლების დამატება</Button>
             <ButtonsContainer>
-                <Button bgColor='#6B40E3;' pdng='10px 35px'>უკან</Button>
+                <Button bgColor='#6B40E3;' pdng='10px 35px' onClick={() => navigate(-1)}>უკან</Button>
                 <Button bgColor='#6B40E3;' pdng='10px 35px' type='submit'>შემდეგი</Button>
             </ButtonsContainer>
         </EducationForm>

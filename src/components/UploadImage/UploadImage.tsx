@@ -1,4 +1,4 @@
-import React, {  useRef, useState } from 'react'
+
 import styled from 'styled-components'
 import { useGlobalContext } from '../../Context'
 import { Button } from '../Button/Button'
@@ -14,6 +14,7 @@ type ErrorProps = {
 const UploadImage = () => {
   const {handleImageChange,info} = useGlobalContext()
   
+
   return (
     <UploadImageContainer error={info.image}>
       <UploadImageText >პირადი ფოტოს ატვირთვა</UploadImageText>

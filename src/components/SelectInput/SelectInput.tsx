@@ -1,14 +1,8 @@
-import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import { useGlobalContext } from '../../Context';
 
-type QualityTypes = {
-    title:string
-    id:number
-}
 
 type SelectInputPropTypes= {
-    error:any
     register:any
     name:string
     changeHandler?:((event: React.ChangeEvent<HTMLSelectElement>) => void) | undefined
@@ -18,12 +12,12 @@ type SelectInputPropTypes= {
 }
 
 type SelectInputStyle = {
-    error:string
     status: any
 }
 
 
-const SelectInput = ({error,register,name,changeHandler,value,id,status}:SelectInputPropTypes ) => {
+
+const SelectInput = ({register,name,changeHandler,value,id,status}:SelectInputPropTypes ) => {
     const {quality} = useGlobalContext()
       const registerType = register(name)
 
@@ -34,16 +28,16 @@ const SelectInput = ({error,register,name,changeHandler,value,id,status}:SelectI
                 {...registerType}  
                 status={status} 
                 name={name} 
-                error={error} 
+                
                 onChange={(e) => {registerType.onChange(e);if (changeHandler) {
                     changeHandler(e);
                   }}} 
                 id={id} 
-                value={value || "none"}> 
+                value={value || ""}> 
                 {
                     quality.map((item) => (
                         <>
-                        <option value="none"   disabled hidden>აირჩიეთ ხარისხი</option>
+                        <option value=""   disabled hidden>აირჩიეთ ხარისხი</option>
                         <StyledOptions key={item.id} value={item.title} >{item.title}</StyledOptions>
                         </>
                       

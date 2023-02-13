@@ -42,7 +42,7 @@ const PersonalInfo = () => {
                 placeHolder='ანზორ'
                 name='name'
                 register={register}
-                error={errors.name}
+                
                 value={info.name}
                 changeHandler={handleChange}
                 status={statusHandler(errors.name, info.name)}
@@ -55,12 +55,9 @@ const PersonalInfo = () => {
                 placeHolder='მუმლაძე'
                 name='surname'
                 register={register}
-                error={errors.surname?.message}
                 value={info.surname}
                 changeHandler={handleChange}
                 status={statusHandler(errors.surname, info.surname)}
-                
-                
             />
         </FlexedDiv>
         <UploadImage />
@@ -79,7 +76,7 @@ const PersonalInfo = () => {
             placeHolder='anzorr666@redberry.ge'
             name='email'
             register={register}
-            error={errors.email?.message}
+            
             value={info.email}
             changeHandler={handleChange}
             status={statusHandler(errors.email , info.email)}
@@ -93,7 +90,6 @@ const PersonalInfo = () => {
             placeHolder='+995 551 12 34 56'
             name="phone_number"
             register={register}
-            error={errors.phone_number}
             value={info.phone_number}
             changeHandler={handleChange}
             status={statusHandler(errors.phone_number , info.phone_number)}

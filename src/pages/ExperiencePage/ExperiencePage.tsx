@@ -3,7 +3,6 @@ import Header from '../../components/Header/Header'
 import InputGroup from '../../components/InputGroup/InputGroup'
 import Resume from '../../components/Resume/Resume'
 import TextareaGroup from '../../components/TextareaGroup/TextareaGroup'
-
 import styled from 'styled-components'
 import { useGlobalContext } from '../../Context'
 import {  useNavigate } from 'react-router-dom'
@@ -97,7 +96,6 @@ const ExperiencePage = () => {
                 value={x.description}
                 changeHandler={e=>handleInputChange(e,i,'experience')}
                 status={statusHandler(errors.experiences?.[i]?.description, x.description)}
-                
             />
         </ExperienceContainer>
           )
@@ -108,7 +106,7 @@ const ExperiencePage = () => {
      
         <Button bgColor='#62A1EB' onClick={ ()=> handleAddClick('experience')} type='button'>მეტი გამოცდილების დამატება</Button>
         <ButtonsContainer>
-            <Button bgColor='#6B40E3;' pdng='10px 35px'>უკან</Button>
+            <Button bgColor='#6B40E3;' pdng='10px 35px' onClick={() => navigate(-1)}>უკან</Button>
             <Button bgColor='#6B40E3;' pdng='10px 35px' type='submit'>შემდეგი</Button>
         </ButtonsContainer>
         </FormContainer >

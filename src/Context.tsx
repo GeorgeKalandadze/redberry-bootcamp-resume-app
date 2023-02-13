@@ -15,6 +15,7 @@ type ContextTypes = {
     quality:QualityTypes[]
     sendData: () => void
     finalResumeResponse:ResumeObjectTypes
+    resetLastSavedInfo:() => void
 }
 
 
@@ -55,7 +56,8 @@ type QualityTypes = {
 export const AppProvider:FunctionComponent<ContextChildType> = ({children}) => {
 const [info,setInfo] = useSessionStorage<ResumeObjectTypes>('resume-info',resumeInfo)
 const [quality, setQuality] = useState<QualityTypes[]>([]);
-const [finalResumeResponse, setFinalResumeResponse] = useSessionStorage('finl-resume-info',{} as ResumeObjectTypes)
+const [finalResumeResponse, setFinalResumeResponse] = useSessionStorage('final-resume-info',{} as ResumeObjectTypes)
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -85,11 +87,13 @@ const [finalResumeResponse, setFinalResumeResponse] = useSessionStorage('finl-re
             setInfo((prev) => ({ ...prev, image: dataURL }));
           };
         }
+     
       };
+
 
       const handleInputChange = (event: React.ChangeEvent<HTMLInputElement|HTMLSelectElement|HTMLTextAreaElement>, index: number, type: 'experience' | 'education') => {
         const { id, value } = event.target;
-      
+        
         let experiences: Experiences[];
         let educations: Educations[];
         if (type === 'experience') {
@@ -211,6 +215,13 @@ const [finalResumeResponse, setFinalResumeResponse] = useSessionStorage('finl-re
       }
 
 
+      const resetLastSavedInfo = () => {
+        setInfo(resumeInfo) 
+        sessionStorage.clear()
+        setFinalResumeResponse({} as ResumeObjectTypes)
+      }
+
+
 
     
     return <AppContext.Provider value={{
@@ -223,7 +234,8 @@ const [finalResumeResponse, setFinalResumeResponse] = useSessionStorage('finl-re
         statusHandler,
         quality,
         sendData,
-        finalResumeResponse
+        finalResumeResponse,
+        resetLastSavedInfo
         }}>
         {children}
     </AppContext.Provider>

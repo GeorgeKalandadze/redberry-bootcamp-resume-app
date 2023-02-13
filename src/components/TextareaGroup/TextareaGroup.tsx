@@ -6,12 +6,12 @@ type TextareaPropTypes = {
     register?:any
     RegisterName?:string
     id?:string
-    
     value:string
     name?:string
     changeHandler?:(event: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => void
     status: any
 }
+
 
 type ErrorType = {
   

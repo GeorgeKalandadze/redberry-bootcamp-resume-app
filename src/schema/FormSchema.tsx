@@ -69,7 +69,7 @@ export const educationFormSchema = yup.object().shape({
 
     description:yup
     .string()
-    .min(3)
+    .min(2)
     .required(),
 
     degree_id:yup
